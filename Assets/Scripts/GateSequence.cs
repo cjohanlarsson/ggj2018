@@ -55,7 +55,6 @@ public class GateSequence : MonoBehaviour
 		timeTillNextBeat -= Time.deltaTime;
 		if(timeTillNextBeat <= 0)
 		{
-			Debug.Log( "PLAY GATE: " + gateIndex.ToString() );
 			timeTillNextBeat += 1 / (bpm / 60f);
 
 			bool isSet = gates[gateIndex].IsSet;
