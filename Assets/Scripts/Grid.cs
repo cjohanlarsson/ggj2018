@@ -21,6 +21,7 @@ public class Grid : MonoBehaviour {
 
 	public List<Note> notes;
 	public List<GridObject> gridObjects;
+	public Dictionary<Vector2Int,GridObject> gridObjectsByPos = new Dictionary<Vector2Int, GridObject>();
 	public List<Emitter> emitters;
 
 	bool requiresUpdate;
@@ -37,6 +38,7 @@ public class Grid : MonoBehaviour {
 			if( obj is Emitter ) {
 				emitters.Add( (Emitter)obj );
 			}
+			gridObjectsByPos.Add( obj.gridPos, obj );
 		}
 
 		foreach( var note in notes ) {
@@ -52,8 +54,15 @@ public class Grid : MonoBehaviour {
 			requiresUpdate = false;
 			
 			foreach( var note in notes ) {
-				var dir = GetDirectionVector( note.direction );
-				note.gridPos += dir;
+				note.Move();
+			}
+
+			foreach( var note in notes ) {
+				var pos = note.gridPos;
+				GridObject obj;
+				if( gridObjectsByPos.TryGetValue( pos, out obj ) ) {
+					obj.OnNoteEnter( note );
+				}
 			}
 		}
 	}
@@ -71,7 +80,7 @@ public class Grid : MonoBehaviour {
 		}
     }
 
-	Vector2Int GetDirectionVector ( MoveDirection direction ) {
+	public static Vector2Int GetDirectionVector ( MoveDirection direction ) {
 		switch( direction ) {
 			case MoveDirection.Up:
 				return new Vector2Int( 0, 1 );
@@ -84,4 +93,10 @@ public class Grid : MonoBehaviour {
 		}
 		return Vector2Int.zero;
 	}
+
+    public Note CloneNote( Note note ) {
+		var clone = Instantiate( note );
+		notes.Add( clone );
+		return clone;
+    }
 }

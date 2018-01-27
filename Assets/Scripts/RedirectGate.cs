@@ -1,3 +1,6 @@
+using UnityEngine;
+
+[SelectionBase]
 public class RedirectGate : GridObject {
 	public MoveDirection redirectDirection;
 
