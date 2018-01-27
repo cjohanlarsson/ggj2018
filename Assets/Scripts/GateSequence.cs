@@ -11,7 +11,7 @@ public class GateSequence : MonoBehaviour
 {
 	[Header("Sequence slots")]
 	public int startingMidiIndex;
-	public Gate[] gates;
+	public OldGate[] gates;
 	public int bpm = 120;
 
 	[Header("MIDI Info")]
@@ -65,7 +65,7 @@ public class GateSequence : MonoBehaviour
 		}
 	}
 
-	IEnumerator PlayGate(Gate g, bool isSet, int i, float secs)
+	IEnumerator PlayGate(OldGate g, bool isSet, int i, float secs)
 	{
 		g.transform.localScale = Vector3.one * 1.25f;
 		if(isSet)
