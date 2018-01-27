@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Gate : MonoBehaviour 
+public class OldGate : MonoBehaviour 
 {
 	[SerializeField] public InputField input;
 
