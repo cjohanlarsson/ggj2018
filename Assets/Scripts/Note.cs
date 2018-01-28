@@ -84,6 +84,7 @@ public class Note : MonoBehaviour {
     }
 
     private IEnumerator MoveCo() {
+        Debug.Log( "moving" );
         var projectedNextPos = ( gridPos + Grid.GetDirectionVector( direction ) ).ToVector3();
         var moveSpeed = (float)grid.frequency;
         var time = 0f;
@@ -109,7 +110,11 @@ public class Note : MonoBehaviour {
                 startTo   = lineHistory[ 1 ];
             } else {
                 startFrom = lineHistory[ 0 ];
-                startTo   = endFrom;
+                if( duration > 1 ) {
+                    startTo = startFrom;
+                } else {
+                    startTo   = endFrom;
+                }
             }
         } else {
             startFrom = endFrom;
@@ -136,7 +141,6 @@ public class Note : MonoBehaviour {
 
     public void DestroyNote () {
 		// Destroy( gameObject );
-        Debug.Log( moveCo );
         if( moveCo != null ) StopCoroutine( moveCo );
         StartCoroutine( GracefulDestroy() );
     }
@@ -147,27 +151,27 @@ public class Note : MonoBehaviour {
 
 
         while( lineHistory.Count > 1 ) {
-            var time = 0f;
-            var moveSpeed = (float)grid.frequency;
+            line.positionCount = lineHistory.Count;
 
             var start = lineHistory[ 0 ];
             var end = lineHistory[ 1 ];
+
+            var dist = Vector3.Distance( start, end );
+
+            var time = 0f;
+            var moveSpeed = (float)grid.frequency * dist;
+
             while( time < moveSpeed ) {
                 time += Time.deltaTime;
                 var t = time / moveSpeed;
 
                 lineHistory[ 0 ] = Vector3.Lerp( start, end, t );
 
-                foreach( var pos in lineHistory ) {
-                    DebugExtension.DebugPoint( pos );
-                }
+                line.SetPositions( lineHistory.ToArray() );
                 yield return null;
             }
 
             lineHistory.RemoveAt( 0 );
-
-            line.positionCount = lineHistory.Count;
-            line.SetPositions( lineHistory.ToArray() );
         }
 
         Destroy( gameObject );
