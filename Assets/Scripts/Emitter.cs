@@ -4,6 +4,8 @@ using UnityEngine;
 public class Emitter : GridObject {
 
 	[SerializeField] private int emitPerBeats;
+	public float duration = 0.5f;
+
 	private int beatsLeft;
 
 	public int maxEmitted;
