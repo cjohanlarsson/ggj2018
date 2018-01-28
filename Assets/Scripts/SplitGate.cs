@@ -6,7 +6,6 @@ public class SplitGate : GridObject {
     public MoveDirection direction2;
 
     public override void OnNoteEnter( Note note ) {
-        Debug.Log( "hello" );
         var clone = grid.CloneNote( note );
         note.direction = direction1;
         clone.direction = direction2;

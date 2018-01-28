@@ -150,7 +150,9 @@ public class Grid : MonoBehaviour {
 
     public Note CloneNote( Note note ) {
 		var clone = Instantiate( note );
+		clone.grid = this;
 		notes.Add( clone );
+		clone.UpdateAnimations();
 		return clone;
     }
 

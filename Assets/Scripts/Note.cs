@@ -8,7 +8,7 @@ public class Note : MonoBehaviour {
     [SerializeField]
     LineRenderer line;
     [HideInInspector]
-    Grid grid;
+    public Grid grid;
     [SerializeField, HideInInspector]
     Vector2Int _gridPos;
     public Vector2Int gridPos {
@@ -37,6 +37,7 @@ public class Note : MonoBehaviour {
     Coroutine moveCo;
 
     public void Init ( Grid grid ) {
+        Debug.Log( grid );
         this.grid = grid;
 		_gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
 
@@ -111,7 +112,7 @@ public class Note : MonoBehaviour {
     }
 
     public void OnDestroy() {
-		Destroy( gameObject );
+		// Destroy( gameObject );
     }
 
     void OnDrawGizmos () {
