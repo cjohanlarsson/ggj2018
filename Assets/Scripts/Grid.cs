@@ -17,7 +17,7 @@ public class Grid : MonoBehaviour {
 	public int bpm;
 	
 	int sampleRate;
-	double frequency;
+	public double frequency;
 
 	public List<Note> notes;
 	public List<GridObject> gridObjects;
@@ -42,7 +42,7 @@ public class Grid : MonoBehaviour {
 			if( obj is Output ) {
 				outputs.Add( (Output)obj );
 			}
-			
+
 			gridObjectsByPos.Add( obj.gridPos, obj );
 		}
 
@@ -52,7 +52,6 @@ public class Grid : MonoBehaviour {
 
 		beatTimer = AudioSettings.dspTime * sampleRate;
 		frequency = 60.0 / bpm;
-		Debug.Log( frequency );
 	}
 
 	void Update () {
@@ -90,6 +89,12 @@ public class Grid : MonoBehaviour {
 		}
     }
 
+    public Note CloneNote( Note note ) {
+		var clone = Instantiate( note );
+		notes.Add( clone );
+		return clone;
+    }
+
 	public static Vector2Int GetDirectionVector ( MoveDirection direction ) {
 		switch( direction ) {
 			case MoveDirection.Up:
@@ -103,10 +108,10 @@ public class Grid : MonoBehaviour {
 		}
 		return Vector2Int.zero;
 	}
+}
 
-    public Note CloneNote( Note note ) {
-		var clone = Instantiate( note );
-		notes.Add( clone );
-		return clone;
-    }
+static class Vector2IntExtensions {
+	public static Vector3 ToVector3 ( this Vector2Int vec ) {
+		return new Vector3( vec.x, vec.y );
+	}
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 public abstract class GridObject : MonoBehaviour {
 	[HideInInspector]
 	public Grid grid;
-	// [HideInInspector]
+	[HideInInspector]
 	public Vector2Int gridPos;
 
 	public virtual void Init ( Grid grid ) {
