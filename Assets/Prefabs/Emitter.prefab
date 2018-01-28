@@ -136,4 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ac16694d66545a6864c56922f253d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
+  renderersToSwapForColor: []
   grid: {fileID: 0}
+  emitPerBeats: 0
+  duration: 0.5
+  maxEmitted: 1

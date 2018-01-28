@@ -501,6 +501,15 @@ Prefab:
       propertyPath: camera
       value: 
       objectReference: {fileID: 2055467092}
+    - target: {fileID: 4556126362822950, guid: 14754ef3a583c44c39194e48a62568b1, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224211777531098986, guid: 14754ef3a583c44c39194e48a62568b1,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14754ef3a583c44c39194e48a62568b1, type: 2}
   m_IsPrefabParent: 0
@@ -546,7 +555,12 @@ Prefab:
     - target: {fileID: 114729833923113438, guid: b813c4e9b8d1149e2ba2d176df4da620,
         type: 2}
       propertyPath: emitPerBeats
-      value: 20
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114729833923113438, guid: b813c4e9b8d1149e2ba2d176df4da620,
+        type: 2}
+      propertyPath: maxEmitted
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b813c4e9b8d1149e2ba2d176df4da620, type: 2}
@@ -832,7 +846,7 @@ Prefab:
     - target: {fileID: 114067146511925180, guid: dd9b38ec62c224032aebc267f86c0178,
         type: 2}
       propertyPath: raiseAmount
-      value: -1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd9b38ec62c224032aebc267f86c0178, type: 2}
@@ -1352,7 +1366,7 @@ MonoBehaviour:
   beatTimer: 0
   currentBeat: 0
   bpm: 120
-  maxNoteBeatLifetime: 10
+  maxNoteBeatLifetime: 1000
   goals:
   - pitch: 0
     beatIndex: 0
