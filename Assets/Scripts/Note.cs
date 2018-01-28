@@ -37,11 +37,9 @@ public class Note : MonoBehaviour {
 
     public void Init ( Grid grid ) {
         this.grid = grid;
-		gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
+		_gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
 
-        line.positionCount = 2;
-        line.SetPosition( 0, transform.position );
-        line.SetPosition( 1, transform.position );
+        UpdateAnimations();
     }
 
     public bool Move () {
@@ -61,42 +59,51 @@ public class Note : MonoBehaviour {
 
     private IEnumerator MoveCo() {
         var projectedNextPos = ( gridPos + Grid.GetDirectionVector( direction ) ).ToVector3();
+        Debug.Log( projectedNextPos );
         var moveSpeed = (float)grid.frequency;
         var time = 0f;
-        var endStartPos = positionHistory[ positionHistory.Count - 1 ].ToVector3();
         var historyDuration = duration;
         var lineHistory = new List<Vector3>();
         var positionIndex = positionHistory.Count - 1;
-        Vector3 startFrom = Vector3.zero;
+        
         Vector3 endFrom = gridPos.ToVector3();
         Vector3 endTo = projectedNextPos;
 
-        while( historyDuration > 0 && positionIndex > 0 ) {
-            if( historyDuration > 1 ) {
-                lineHistory.Add( positionHistory[ positionIndex ].ToVector3() );
-            } else {
-                startFrom = positionHistory[ positionIndex ].ToVector3();
-            }
+        while( historyDuration > 0 && positionIndex >= 0 ) {
+            lineHistory.Add( positionHistory[ positionIndex ].ToVector3() );
             positionIndex -= 1;
             historyDuration -= 1;
         }
-        lineHistory.Add( startFrom );
+
         lineHistory.Reverse();
+        Vector3 startFrom;
+        Vector3 startTo;
+        if( lineHistory.Count > 0 ) {
+            if( lineHistory.Count > 1 ) {
+                startFrom = lineHistory[ 0 ];
+                startTo   = lineHistory[ 1 ];
+            } else {
+                startFrom = lineHistory[ 0 ];
+                startTo   = endFrom;
+            }
+        } else {
+            startFrom = endFrom;
+            startTo   = endFrom;
+        }
+
         lineHistory.Add( endFrom );
         lineHistory.Add( endTo );
 
         line.positionCount = lineHistory.Count;
+
+        Debug.Log( time + " " + moveSpeed );
         
         while( time < moveSpeed ) {
             time += Time.deltaTime;
             var t = time / moveSpeed;
-            
-            lineHistory[ 0 ] = Vector3.Lerp( startFrom, lineHistory[ 1 ], t );
-            lineHistory[ lineHistory.Count - 1 ] = Vector3.Lerp( lineHistory[ lineHistory.Count - 2 ], endTo, t );
 
-            foreach( var l in lineHistory ) {
-                DebugExtension.DebugPoint( l, Color.red );
-            }
+            lineHistory[ 0 ] = Vector3.Lerp( startFrom, startTo, t );
+            lineHistory[ lineHistory.Count - 1 ] = Vector3.Lerp( endFrom, endTo, t );
 
             line.SetPositions( lineHistory.ToArray() );
 
