@@ -16,7 +16,7 @@ public class Note : MonoBehaviour {
     [SerializeField]
     LineRenderer line;
     [HideInInspector]
-    Grid grid;
+    public Grid grid;
     [SerializeField, HideInInspector]
     Vector2Int _gridPos;
     public Vector2Int gridPos {
@@ -30,6 +30,8 @@ public class Note : MonoBehaviour {
         }
     }
     List<Vector2Int> positionHistory = new List<Vector2Int>();
+
+    List<Vector3> lineHistory = new List<Vector3>();
 
     [Space]
 	public float duration = 1; // in beats
@@ -55,9 +57,9 @@ public class Note : MonoBehaviour {
 
     Coroutine moveCo;
 
-    public void Init ( Grid grid ) {
+    public void Init ( Grid grid, bool updateGridPos = true ) {
         this.grid = grid;
-		_gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
+		if( updateGridPos ) _gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
 
         UpdateAnimations();
     }
@@ -83,7 +85,7 @@ public class Note : MonoBehaviour {
         var moveSpeed = (float)grid.frequency;
         var time = 0f;
         var historyDuration = duration;
-        var lineHistory = new List<Vector3>();
+        lineHistory.Clear();
         var positionIndex = positionHistory.Count - 1;
         
         Vector3 endFrom = gridPos.ToVector3();
@@ -129,8 +131,23 @@ public class Note : MonoBehaviour {
         }
     }
 
-    public void OnDestroy() {
-		Destroy( gameObject );
+    public void DestroyNote () {
+		// Destroy( gameObject );
+        Debug.Log( moveCo );
+        if( moveCo != null ) StopCoroutine( moveCo );
+        StartCoroutine( GracefulDestroy() );
+    }
+
+    IEnumerator GracefulDestroy () {
+		GameObject.Destroy (this.gameObject);
+
+        while( lineHistory.Count > 0 ) {
+            foreach( var pos in lineHistory ) {
+                DebugExtension.DebugPoint( pos );
+            }
+
+            yield return null;
+        }
     }
 
     void OnDrawGizmos () {

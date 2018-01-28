@@ -32,7 +32,7 @@ public class Grid : MonoBehaviour {
 	public double beatTimer;
 	public float currentBeat;
 	public int bpm;
-	public int maxNoteBeatLifetime = 10;
+	public int maxNoteBeatLifetime = 1000;
 	[SerializeField] private List<OutputGoal> goals;
 
 	int sampleRate;
@@ -115,7 +115,7 @@ public class Grid : MonoBehaviour {
 
 			for(int i=0;i<this.notes.Count;i++) {
 				if(this.notes[i].BeatLifetime > maxNoteBeatLifetime) {
-					this.notes[i].OnDestroy();
+					this.notes[i].DestroyNote();
 					this.notes.RemoveAt(i--);
 				}
 			}
@@ -141,7 +141,7 @@ public class Grid : MonoBehaviour {
 
     public void DestroyNote ( Note note ) {
 		notes.Remove( note );
-		note.OnDestroy();
+		note.DestroyNote();
     }
 
 	void OnAudioFilterRead ( float[] data, int channels ) {
@@ -154,6 +154,7 @@ public class Grid : MonoBehaviour {
 
     public Note CloneNote( Note note ) {
 		var clone = Instantiate( note );
+		clone.grid = this;
 		notes.Add( clone );
 		return clone;
     }
