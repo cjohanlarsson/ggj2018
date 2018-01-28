@@ -137,7 +137,7 @@ public class Grid : MonoBehaviour {
 
     public void DestroyNote ( Note note ) {
 		notes.Remove( note );
-		note.OnDestroy();
+		note.DestroyNote();
     }
 
 	void OnAudioFilterRead ( float[] data, int channels ) {

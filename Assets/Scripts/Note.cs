@@ -23,6 +23,8 @@ public class Note : MonoBehaviour {
     }
     List<Vector2Int> positionHistory = new List<Vector2Int>();
 
+    List<Vector3> lineHistory = new List<Vector3>();
+
     [Space]
 	public float duration = 1; // in beats
 	public MoveDirection direction;
@@ -37,7 +39,6 @@ public class Note : MonoBehaviour {
     Coroutine moveCo;
 
     public void Init ( Grid grid, bool updateGridPos = true ) {
-        Debug.Log( grid );
         this.grid = grid;
 		if( updateGridPos ) _gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
 
@@ -65,7 +66,7 @@ public class Note : MonoBehaviour {
         var moveSpeed = (float)grid.frequency;
         var time = 0f;
         var historyDuration = duration;
-        var lineHistory = new List<Vector3>();
+        lineHistory.Clear();
         var positionIndex = positionHistory.Count - 1;
         
         Vector3 endFrom = gridPos.ToVector3();
@@ -111,8 +112,24 @@ public class Note : MonoBehaviour {
         }
     }
 
-    public void OnDestroy() {
-		Destroy( gameObject );
+    public void DestroyNote () {
+		// Destroy( gameObject );
+        Debug.Log( moveCo );
+        if( moveCo != null ) StopCoroutine( moveCo );
+        StartCoroutine( GracefulDestroy() );
+    }
+
+    IEnumerator GracefulDestroy () {
+        Debug.Break();
+
+
+        while( lineHistory.Count > 0 ) {
+            foreach( var pos in lineHistory ) {
+                DebugExtension.DebugPoint( pos );
+            }
+
+            yield return null;
+        }
     }
 
     void OnDrawGizmos () {
