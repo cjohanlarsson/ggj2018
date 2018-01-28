@@ -11,7 +11,7 @@ public class Emitter : GridObject {
 	public int maxEmitted;
 
 	void Awake() {
-		beatsLeft = emitPerBeats;
+		beatsLeft = 0;
 	}
 
     public override void OnNoteEnter( Note note ) {
@@ -21,7 +21,7 @@ public class Emitter : GridObject {
 	public bool CheckReady() {
 		if( maxEmitted <= 0 ) return false;
 		beatsLeft--;
-		if(beatsLeft == 0)
+		if(beatsLeft <= 0)
 		{
 			beatsLeft = emitPerBeats;
 			maxEmitted -= 1;

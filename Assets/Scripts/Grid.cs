@@ -84,7 +84,6 @@ public class Grid : MonoBehaviour {
 
 	void Update () {
 		if( Time.time > beatTimer ) {
-			BeatsTicked++;
 			beatTimer += frequency;
 			requiresUpdate = false;
 
@@ -122,6 +121,7 @@ public class Grid : MonoBehaviour {
 
 			if(goals.Count > 0 && goals[0].Complete)
 				currentBeatTowardsGoal++;
+			BeatsTicked++;
 		}
 
 	}
