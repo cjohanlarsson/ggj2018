@@ -35,5 +35,9 @@ public abstract class GridObject : MonoBehaviour {
 		}
 	}
 
+    public virtual void Rotate ( bool clockwise = true ) {
+		
+	}
+
 	public abstract void OnNoteEnter ( Note note );
 }

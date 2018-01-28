@@ -11,4 +11,9 @@ public class SplitGate : GridObject {
         clone.direction = direction2;
         clone.Init( grid, false );
     }
+
+    public override void Rotate ( bool clockwise = true ) {
+        direction1 = Grid.RotateDirection( direction1, clockwise );
+        direction2 = Grid.RotateDirection( direction2, clockwise );
+    }
 }

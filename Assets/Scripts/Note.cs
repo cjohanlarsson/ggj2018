@@ -37,13 +37,14 @@ public class Note : MonoBehaviour {
 	public float duration = 1; // in beats
 	public MoveDirection direction;
 	public int pitch;
+    [SerializeField]
 	private NoteColor _color;
 	public NoteColor color
 	{
 		get { return _color; }
 		set { 
-			_color = value; 
-			if(this.line != null) { 
+			_color = value;
+			if(this.line != null) {
 				this.line.startColor = this.line.endColor = Visuals.Singleton.ConvertNoteColorToColor(this._color); 
 			} 
 		}

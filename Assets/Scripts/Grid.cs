@@ -29,7 +29,7 @@ public class OutputGoal
 public class Grid : MonoBehaviour {
 	public static Grid Singleton;
 
-	public double beatTimer;
+    public double beatTimer;
 	public float currentBeat;
 	public int bpm;
 	public int maxNoteBeatLifetime = 1000;
@@ -123,6 +123,7 @@ public class Grid : MonoBehaviour {
 			if(goals.Count > 0 && goals[0].Complete)
 				currentBeatTowardsGoal++;
 		}
+
 	}
 
 	public bool UpdateGridObject( GridObject go, Vector2Int pos ) {
@@ -172,6 +173,34 @@ public class Grid : MonoBehaviour {
 		}
 		return Vector2Int.zero;
 	}
+
+    internal static MoveDirection RotateDirection( MoveDirection direction, bool clockwise = true ) {
+		if( clockwise ) {
+			switch( direction ) {
+				case MoveDirection.Up:
+					return MoveDirection.Right;
+				case MoveDirection.Right:
+					return MoveDirection.Down;
+				case MoveDirection.Down:
+					return MoveDirection.Left;
+				case MoveDirection.Left:
+					return MoveDirection.Up;
+			}
+		} else {
+			switch( direction ) {
+				case MoveDirection.Up:
+					return MoveDirection.Left;
+				case MoveDirection.Right:
+					return MoveDirection.Up;
+				case MoveDirection.Down:
+					return MoveDirection.Right;
+				case MoveDirection.Left:
+					return MoveDirection.Down;
+			}
+		}
+
+		return MoveDirection.Up;
+    }
 
     void CreateNote(Emitter e) {
 		var note = GameObject.Instantiate(notePrefab, e.transform.position, Quaternion.identity);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DragDrop : MonoBehaviour 
 {
-	GameObject dragObject;
+	GridObject dragObject;
 
 	// Update is called once per frame
 	void Update () {
@@ -16,7 +16,7 @@ public class DragDrop : MonoBehaviour
 				RaycastHit hitInfo;
 				if( Physics.Raycast( ray, out hitInfo, 1000f) )
 				{
-					dragObject = hitInfo.collider.gameObject;
+					dragObject = hitInfo.collider.GetComponent<GridObject>();
 				}
 			}
 		}
@@ -32,15 +32,18 @@ public class DragDrop : MonoBehaviour
 				dragPos.x = Mathf.Round(dragPos.x);
 				dragPos.y = Mathf.Round(dragPos.y);
 
-				var go = dragObject.GetComponent<GridObject>();
-				go.SetGridPos( new Vector2Int( Mathf.RoundToInt(dragPos.x), Mathf.RoundToInt(dragPos.y) ) );
-				dragObject.transform.position = new Vector3(go.gridPos.x,go.gridPos.y,0);
+				dragObject.SetGridPos( new Vector2Int( Mathf.RoundToInt(dragPos.x), Mathf.RoundToInt(dragPos.y) ) );
+				dragObject.transform.position = dragObject.gridPos.ToVector3();
 
 			}
 			else
 			{
 				dragPos.z = 0f;
 				dragObject.transform.position = dragPos;
+
+				if( Input.GetKeyDown( KeyCode.R ) ) {
+					dragObject.Rotate();
+				}
 			}
 			if(isUp)
 				dragObject = null;

@@ -6,7 +6,6 @@ public class InfiniteGrid : MonoBehaviour {
 
 	public Camera camera;
 	public MeshRenderer renderer;
-	public ParticleSystem particles;
 
 	MaterialPropertyBlock matProps;
 
