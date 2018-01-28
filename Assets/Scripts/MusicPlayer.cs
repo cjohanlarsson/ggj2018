@@ -63,9 +63,9 @@ public class MusicPlayer : MonoBehaviour
 
     }
 
-    public void PlayNote(int pitch)
+    public void PlayNote(int pitch, float duration)
     {
-    	StartCoroutine( PlayNoteCoro(pitch, 0.25f) );
+    	StartCoroutine( PlayNoteCoro(pitch, duration) );
     }
 
 	IEnumerator PlayNoteCoro(int i, float secs)

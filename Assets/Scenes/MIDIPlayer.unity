@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.57482487, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3fa7422909e5244786a79dcd7adc333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  midiFilePath: Midis/Groove.mid
+  midiFilePath: Midis/GGJ2018_MIDI.mid
   ShouldPlayFile: 1
   bankFilePath: GM Bank/gm
   bufferSize: 1024
