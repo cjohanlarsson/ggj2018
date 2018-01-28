@@ -112,7 +112,7 @@ public class Note : MonoBehaviour {
     }
 
     public void OnDestroy() {
-		// Destroy( gameObject );
+		Destroy( gameObject );
     }
 
     void OnDrawGizmos () {
