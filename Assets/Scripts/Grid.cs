@@ -50,6 +50,12 @@ public class Grid : MonoBehaviour {
 	void Awake () {
 		Singleton = this;
 		sampleRate = AudioSettings.outputSampleRate;
+
+		// beatTimer = AudioSettings.dspTime * sampleRate;
+		frequency = 60.0 / bpm;
+		beatTimer = Time.time + frequency;
+
+		
 		var allGridObjects = FindObjectsOfType<GridObject>();
 		var allNotes = FindObjectsOfType<Note>();
 		gridObjects = new List<GridObject>( allGridObjects );
@@ -68,10 +74,6 @@ public class Grid : MonoBehaviour {
 		foreach( var note in notes ) {
 			note.Init( this );
 		}
-
-		// beatTimer = AudioSettings.dspTime * sampleRate;
-		beatTimer = Time.time;
-		frequency = 60.0 / bpm;
 	}
 
 	void OnDestroy() {
@@ -114,7 +116,7 @@ public class Grid : MonoBehaviour {
 				}
 			}
 
-			if(goals[0].Complete)
+			if(goals.Count > 0 && goals[0].Complete)
 				currentBeatTowardsGoal++;
 		}
 	}
