@@ -742,6 +742,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backToMain: {fileID: 1327963612}
   reset: {fileID: 187863733}
+  play: {fileID: 0}
+  playText: {fileID: 0}
   youWinScreen: {fileID: 1818311414}
 --- !u!114 &1215725085
 MonoBehaviour:
@@ -1573,6 +1575,27 @@ Prefab:
     - target: {fileID: 4399538623051678, guid: a48eab62ce4df4132951122a016ce429, type: 2}
       propertyPath: m_RootOrder
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114294328611583216, guid: a48eab62ce4df4132951122a016ce429,
+        type: 2}
+      propertyPath: redirectDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674058131500272, guid: a48eab62ce4df4132951122a016ce429, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674058131500272, guid: a48eab62ce4df4132951122a016ce429, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674058131500272, guid: a48eab62ce4df4132951122a016ce429, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.2800119
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674058131500272, guid: a48eab62ce4df4132951122a016ce429, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a48eab62ce4df4132951122a016ce429, type: 2}

@@ -34,7 +34,7 @@ public class Grid : MonoBehaviour {
 
     public int bpm;
 	public int maxNoteBeatLifetime = 1000;
-	[SerializeField] private List<OutputGoal> goals;
+	public List<OutputGoal> goals;
 
     int sampleRate;
 	public double frequency;
