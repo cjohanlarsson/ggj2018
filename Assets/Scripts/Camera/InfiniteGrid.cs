@@ -13,6 +13,7 @@ public class InfiniteGrid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		camera = Camera.main;
 		matProps = new MaterialPropertyBlock();
 	}
 

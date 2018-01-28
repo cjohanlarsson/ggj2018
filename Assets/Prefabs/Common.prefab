@@ -327,7 +327,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1698599147763228}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6786049, y: 3.3220444, z: -7.5351562}
+  m_LocalPosition: {x: -0.6786049, y: 3.3220444, z: 2.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4819641251996518}
@@ -440,9 +440,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 0
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &114038914719854824
@@ -726,7 +726,7 @@ MonoBehaviour:
   backToMain: {fileID: 114206689545211610}
   reset: {fileID: 114729207756586302}
   play: {fileID: 114667930334162506}
-  playText: {fileID: 0}
+  playText: {fileID: 114038914719854824}
   youWinScreen: {fileID: 1163530215153592}
   goalMusicSheet: {fileID: 224665532671313328}
   goalVertLine: {fileID: 1088034368972930}

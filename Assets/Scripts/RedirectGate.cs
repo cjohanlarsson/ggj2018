@@ -7,6 +7,11 @@ public class RedirectGate : GridObject {
 	[SerializeField]
 	GameObject redirectDirectionImg;
 
+	public override void Init ( Grid grid ) {
+		base.Init( grid );
+		UpdateRotationGraphics();
+	}
+
 	public override void OnNoteEnter ( Note note ) {
 		note.direction = redirectDirection;
 	}

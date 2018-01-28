@@ -12,6 +12,7 @@ public class SplitGate : GridObject {
 
     public override void Init(Grid grid) {
         base.Init( grid );
+		UpdateRotationGraphics();
     }
 
     public override void OnNoteEnter( Note note ) {
@@ -32,6 +33,8 @@ public class SplitGate : GridObject {
     }
 
     private void UpdateRotationGraphics() {
+		Debug.Log( direction1 );
+		Debug.Log( direction2 );
         Vector3 d1 = Grid.GetDirectionVector(direction1).ToVector3();
         Vector3 d2 = Grid.GetDirectionVector(direction2).ToVector3();
         direction1Img.transform.localPosition = d1 * 0.2800119f;
