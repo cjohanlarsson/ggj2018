@@ -120,8 +120,7 @@ public class Note : MonoBehaviour {
     }
 
     IEnumerator GracefulDestroy () {
-        Debug.Break();
-
+		GameObject.Destroy (this.gameObject);
 
         while( lineHistory.Count > 0 ) {
             foreach( var pos in lineHistory ) {
