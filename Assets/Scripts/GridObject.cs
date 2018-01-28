@@ -1,6 +1,8 @@
 using UnityEngine;
 public abstract class GridObject : MonoBehaviour {
+	[HideInInspector]
 	public Grid grid;
+
 	private Vector2Int _gridPos;
 	public Vector2Int gridPos
 	{
@@ -18,6 +20,7 @@ public abstract class GridObject : MonoBehaviour {
 			return false;
 		}
 	}
+
 
 	public virtual void Init ( Grid grid ) {
 		this.grid = grid;

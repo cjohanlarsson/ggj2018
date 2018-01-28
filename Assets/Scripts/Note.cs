@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
+
 public class Note : MonoBehaviour {
+    [HideInInspector]
     Grid grid;
-    [SerializeField]
+    [SerializeField, HideInInspector]
     Vector2Int _gridPos;
     public Vector2Int gridPos {
         get {
@@ -19,16 +22,21 @@ public class Note : MonoBehaviour {
 
     public int beatWait;
 
+    [NonSerialized]
+    public bool updated;
+
     public void Init ( Grid grid ) {
         this.grid = grid;
 		gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
     }
 
-    public void Move () {
+    public bool Move () {
         if( beatWait > 0 ) {
             beatWait -= 1;
+            return false;
         } else {
             gridPos += Grid.GetDirectionVector( direction );
+            return true;
         }
     }
 

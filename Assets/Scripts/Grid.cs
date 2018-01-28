@@ -23,6 +23,7 @@ public class Grid : MonoBehaviour {
 	public List<GridObject> gridObjects;
 	public Dictionary<Vector2Int,GridObject> gridObjectsByPos = new Dictionary<Vector2Int, GridObject>();
 	public List<Emitter> emitters;
+	public List<Output> outputs;
 
 	bool requiresUpdate;
 
@@ -38,13 +39,18 @@ public class Grid : MonoBehaviour {
 			if( obj is Emitter ) {
 				emitters.Add( (Emitter)obj );
 			}
+			if( obj is Output ) {
+				outputs.Add( (Output)obj );
+			}
+			
 		}
 
 		foreach( var note in notes ) {
 			note.Init( this );
 		}
 
-		frequency = bpm / 60.0;
+		beatTimer = AudioSettings.dspTime * sampleRate;
+		frequency = 60.0 / bpm;
 		Debug.Log( frequency );
 	}
 
@@ -52,11 +58,15 @@ public class Grid : MonoBehaviour {
 		if( requiresUpdate ) {
 			requiresUpdate = false;
 			
+			var dirtyNotes = new List<Note>();
 			foreach( var note in notes ) {
-				note.Move();
+				var moved = note.Move();
+				if( moved ) {
+					dirtyNotes.Add( note );
+				}
 			}
-
-			foreach( var note in notes ) {
+			
+			foreach( var note in dirtyNotes ) {
 				var pos = note.gridPos;
 				GridObject obj;
 				if( gridObjectsByPos.TryGetValue( pos, out obj ) ) {
