@@ -36,10 +36,10 @@ public class Note : MonoBehaviour {
 
     Coroutine moveCo;
 
-    public void Init ( Grid grid ) {
+    public void Init ( Grid grid, bool updateGridPos = true ) {
         Debug.Log( grid );
         this.grid = grid;
-		_gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
+		if( updateGridPos ) _gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
 
         UpdateAnimations();
     }

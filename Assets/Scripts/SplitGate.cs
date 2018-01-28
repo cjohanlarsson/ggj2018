@@ -9,5 +9,6 @@ public class SplitGate : GridObject {
         var clone = grid.CloneNote( note );
         note.direction = direction1;
         clone.direction = direction2;
+        clone.Init( grid, false );
     }
 }
