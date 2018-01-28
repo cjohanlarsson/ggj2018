@@ -23,6 +23,7 @@ public class Emitter : GridObject {
 	}
 
 	public override void OnStop () {
+		base.OnStop();
 		beatsLeft = 0;
 		remainingEmitted = maxEmitted;
 	}

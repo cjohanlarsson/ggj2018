@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class TrashGate : GridObject {
     public int useCount;
 
@@ -9,6 +11,7 @@ public class TrashGate : GridObject {
     }
 
     public override void OnStop () {
+		base.OnStop();
         remainingUses = useCount;
     }
 
@@ -21,6 +24,6 @@ public class TrashGate : GridObject {
         var particles = Grid.MakeNoteCollideParticles( note );
         particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.15f );
         particles.transform.rotation = Grid.GetDirectionRotation( Grid.GetOppositeDirection( note.direction ) );
-		Waver( note.duration * (float)grid.frequency - 0.04f );
+		Waver( note.duration *  (float)grid.frequency );
 	}
 }

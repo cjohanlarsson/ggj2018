@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using UnityEngine;
 public abstract class GridObject : MonoBehaviour {
+	public bool pinned;
 	public GameObject graphics;
 
 	public NoteColor color;
-	public Renderer[] renderersToSwapForColor;
+	public SpriteRenderer[] renderersToSwapForColor;
 
 	[HideInInspector]
 	public Grid grid;
@@ -19,6 +20,8 @@ public abstract class GridObject : MonoBehaviour {
 	}
 
 	Coroutine pulseCo;
+
+	SpriteRenderer spr;
 
 	public bool SetGridPos(Vector2Int newPos) {
 		if(this.grid.UpdateGridObject(this, newPos)) {
@@ -35,8 +38,14 @@ public abstract class GridObject : MonoBehaviour {
 
 		if(renderersToSwapForColor != null && color != NoteColor.None) {
 			foreach(var r in renderersToSwapForColor) {
-				r.sharedMaterial = Visuals.Singleton.ConvertNoteColorToMaterial( color );
+				r.color = Visuals.Singleton.ConvertNoteColorToColor( color );
 			}
+		}
+
+		if( !pinned ) {
+			spr = Instantiate( Resources.Load<SpriteRenderer>( "pinned_sprite" ) );
+			spr.transform.position = transform.position;
+			spr.transform.SetParent( transform );
 		}
 	}
 
@@ -46,8 +55,16 @@ public abstract class GridObject : MonoBehaviour {
 
 	public abstract void OnNoteEnter ( Note note );
 
+	public virtual void OnStart () {
+		if( spr != null ) {
+			spr.color = Grid.Singleton.pinnedOffColor;
+		}
+	}
+
 	public virtual void OnStop () {
-		
+		if( spr != null ) {
+			spr.color = Grid.Singleton.pinnedOnColor;
+		}
 	}
 
 	public virtual void Tick () {
@@ -59,13 +76,18 @@ public abstract class GridObject : MonoBehaviour {
 		pulseCo = StartCoroutine( WaverAnim( duration ) );
 	}
 
-	public void Pulse ( float magnitude = 1 ) {
+	public void Pulse ( float magnitude = 1, Note note = null ) {
 		if( pulseCo != null ) StopCoroutine( pulseCo );
-		pulseCo = StartCoroutine( PulseAnim( magnitude ) );
+		pulseCo = StartCoroutine( PulseAnim( magnitude, note ) );
 	}
 
-	private IEnumerator PulseAnim ( float magnitude ) {
+	private IEnumerator PulseAnim ( float magnitude, Note note ) {
 		var duration = (float)grid.frequency * 0.75f;
+
+		if( note != null ) {
+			var hitParticles = Grid.MakeNoteCollideParticles2( color );
+			hitParticles.transform.position = transform.position;
+		}
 
 		var time = 0f;
 
@@ -96,7 +118,7 @@ public abstract class GridObject : MonoBehaviour {
 
 			var waver = grid.waverCurve.Evaluate( p );
 
-			scale = scale * 0.15f * waver;
+			scale = scale * 0.2f * waver;
 
 			graphics.transform.localScale = Vector3.one + Vector3.one * scale;
 
@@ -104,5 +126,12 @@ public abstract class GridObject : MonoBehaviour {
 		}
 
 		graphics.transform.localScale = Vector3.one;
+	}
+
+	private void OnDrawGizmos () {
+		if( pinned ) {
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireCube( transform.position, Vector3.one * 0.6f );
+		}
 	}
 }

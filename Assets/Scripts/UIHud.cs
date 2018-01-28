@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class UIHud : MonoBehaviour 
 {
+	public Color successColor;
+	public Color blankColor;
+
 	[SerializeField] Button backToMain;
 	[SerializeField] Button reset;
 	[SerializeField] Button play;
@@ -37,14 +40,14 @@ public class UIHud : MonoBehaviour
 	}
 
 	void Start() {
-		CreateMusicSheet();
+		CreateMusicSheet();	
 	}
 
 	void Update () {
 		youWinScreen.gameObject.SetActive(Grid.Singleton != null && Grid.Singleton.IsGoalComplete);
 		var goals = Grid.Singleton.goals;
 		for(int i=0;i<goals.Count;i++)
-			notes[i].color = goals[i].Complete ? Color.black : new Color(0.7f,0.7f,0.7f,1f);
+			notes[i].color = goals[i].Complete ? successColor : blankColor;
 	}
 
 	List<Image> notes = new List<Image>();

@@ -29,6 +29,9 @@ public class OutputGoal
 public class Grid : MonoBehaviour {
 	public static Grid Singleton;
 
+	public Color pinnedOnColor;
+	public Color pinnedOffColor;
+
 	public AnimationCurve pulseCurve;
 	public AnimationCurve waverCurve;
 
@@ -57,7 +60,6 @@ public class Grid : MonoBehaviour {
 	public int BeatsTicked { get; private set; }
 
 	void Awake () {
-		isPlaying = true;
 		Singleton = this;
 		sampleRate = AudioSettings.outputSampleRate;
 
@@ -79,6 +81,8 @@ public class Grid : MonoBehaviour {
 			if( obj is Output ) {
 				outputs.Add( (Output)obj );
 			}
+
+			obj.OnStop();
 		}
 
 		foreach( var note in notes ) {
@@ -283,6 +287,10 @@ public class Grid : MonoBehaviour {
 			Stop();
 		} else {
 			beatTimer = Time.time;
+
+			foreach( var obj in gridObjects ) {
+				obj.OnStart();
+			}
 		}
     }
 
@@ -300,6 +308,10 @@ public class Grid : MonoBehaviour {
 			obj.OnStop();
 		}
 
+		foreach( var goal in goals ) {
+			goal.Complete = false;
+		}
+
 		notes.Clear();
 	}
 
@@ -308,6 +320,14 @@ public class Grid : MonoBehaviour {
 		particles.SetColor( note.color );
         float freq = (float)Grid.Singleton.frequency;
         particles.countdown = note.duration * freq - 0.04f;
+        return particles;
+    }
+
+    public static ParticleDestruct MakeNoteCollideParticles2 ( NoteColor color ) {
+		var particles = Instantiate( Resources.Load<ParticleDestruct>( "gfx/line_collide_particles_2" ) );
+		particles.SetColor( color );
+        float freq = (float)Grid.Singleton.frequency;
+        particles.countdown = 0.8f;
         return particles;
     }
 

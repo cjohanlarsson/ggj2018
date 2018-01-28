@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4063720963678246}
   - component: {fileID: 82346626063203744}
   - component: {fileID: 114243506798457566}
+  - component: {fileID: 114762784900882526}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -132,6 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99154ee5257894c7f9dbc4e6c66323be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pinnedOnColor: {r: 1, g: 0.80689657, b: 0, a: 1}
+  pinnedOffColor: {r: 0.17647058, g: 0.17647058, b: 0.17647058, a: 0.503}
   pulseCurve:
     serializedVersion: 2
     m_Curve:
@@ -200,3 +203,19 @@ MonoBehaviour:
   outputs: []
   notePrefab: {fileID: 114223074214878248, guid: 66e5a310ba9ba4732a5c3163c165ce6a,
     type: 2}
+--- !u!114 &114762784900882526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872568365164516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9d26acba1da4463b45034c82c50e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bankFilePath: GM Bank/gm
+  bufferSize: 1024
+  midiNote: 60
+  midiNoteVolume: 100
+  midiInstrument: 0

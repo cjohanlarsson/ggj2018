@@ -4,18 +4,15 @@ using UnityEngine;
 public class RedirectGate : GridObject {
 	public MoveDirection redirectDirection;
 
-	[SerializeField]
-	GameObject redirectDirectionImg;
-
 	public override void Init ( Grid grid ) {
 		base.Init( grid );
 		UpdateRotationGraphics();
 	}
 
 	public override void OnNoteEnter ( Note note ) {
+		if( note.direction != redirectDirection ) Pulse( 1, note );
 		note.direction = redirectDirection;
 
-		Pulse();
 	}
 
 	public override void Rotate ( bool clockwise = true ) {
@@ -29,7 +26,6 @@ public class RedirectGate : GridObject {
 
     private void UpdateRotationGraphics() {
         Vector3 d1 = Grid.GetDirectionVector(redirectDirection).ToVector3();
-        redirectDirectionImg.transform.localPosition = d1 * 0.2800119f;
 
         var angle = Vector3.Angle(Vector3.up, d1);
 
@@ -38,6 +34,6 @@ public class RedirectGate : GridObject {
             angle = -angle;
         }
 
-        redirectDirectionImg.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		graphics.transform.rotation = Quaternion.AngleAxis(angle, Vector3.back);
     }
 }

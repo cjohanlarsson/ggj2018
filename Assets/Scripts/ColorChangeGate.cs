@@ -11,21 +11,36 @@ public class ColorChangeGate : GridObject {
 
 	float lockTimer = 0;
 
+	public override void Init ( Grid grid ) {
+		base.Init( grid );
+		OnStop();
+	}
+
 	public override void OnNoteEnter ( Note note ) {
 		note.color = currentColor;
 
-        var particles = Grid.MakeNoteCollideParticles( note );
-        particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.20f );
+		gfx.color = Visuals.Singleton.ConvertNoteColorToColor( currentColor );
+
+		var particles = Grid.MakeNoteCollideParticles( note );
+        particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.18f );
         particles.transform.rotation = Grid.GetDirectionRotation( Grid.GetOppositeDirection( note.direction ) );
 
 		lockTimer = note.duration;
-		Waver( note.duration * (float)grid.frequency );
+		Waver( note.duration * ( 1 + (float)grid.frequency ) );
+	}
+
+	public override void OnStop () {
+		base.OnStop();
+		lockTimer = 0;
+		currentColor = colorsToChangeTo[ 0 ];
+		gfx.color = Visuals.Singleton.ConvertNoteColorToColor( currentColor );
 	}
 
 	public override void Tick () {
 		var nc = colorsToChangeTo[ this.grid.BeatsTicked % colorsToChangeTo.Length ];
 		if( lockTimer > 0 ) {
 			lockTimer--;
+			currentColor = nc;
 			return;
 		}
 
