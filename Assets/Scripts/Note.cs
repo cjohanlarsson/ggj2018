@@ -29,6 +29,7 @@ public class Note : MonoBehaviour {
 	public int pitch;
 
     public int beatWait;
+    public int BeatLifetime { get; private set; }
 
     [NonSerialized]
     public bool updated;
@@ -43,6 +44,7 @@ public class Note : MonoBehaviour {
     }
 
     public bool Move () {
+		BeatLifetime++;
         if( beatWait > 0 ) {
             beatWait -= 1;
             return false;

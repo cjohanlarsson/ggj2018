@@ -10,12 +10,31 @@ public enum MoveDirection {
 	Left
 }
 
+[System.Serializable]
+public class OutputGoal
+{
+	public int pitch;
+	public int beatIndex;
+
+	public bool Complete { get; set; }
+
+	public bool Matches(Note n)
+	{
+		return n.pitch == pitch;
+	}
+
+}
+
 [RequireComponent( typeof( AudioSource ))]
 public class Grid : MonoBehaviour {
+	public static Grid Singleton;
+
 	public double beatTimer;
 	public float currentBeat;
 	public int bpm;
-	
+	public int maxNoteBeatLifetime = 10;
+	[SerializeField] private List<OutputGoal> goals;
+
 	int sampleRate;
 	public double frequency;
 
@@ -29,6 +48,7 @@ public class Grid : MonoBehaviour {
 	bool requiresUpdate;
 
 	void Awake () {
+		Singleton = this;
 		sampleRate = AudioSettings.outputSampleRate;
 
 		// beatTimer = AudioSettings.dspTime * sampleRate;
@@ -54,6 +74,10 @@ public class Grid : MonoBehaviour {
 		foreach( var note in notes ) {
 			note.Init( this );
 		}
+	}
+
+	void OnDestroy() {
+		Singleton = null;
 	}
 
 	void Update () {
@@ -84,6 +108,16 @@ public class Grid : MonoBehaviour {
 					CreateNote(e.transform.position);
 				}
 			}
+
+			for(int i=0;i<this.notes.Count;i++) {
+				if(this.notes[i].BeatLifetime > maxNoteBeatLifetime) {
+					this.notes[i].OnDestroy();
+					this.notes.RemoveAt(i--);
+				}
+			}
+
+			if(goals[0].Complete)
+				currentBeatTowardsGoal++;
 		}
 	}
 
@@ -139,6 +173,37 @@ public class Grid : MonoBehaviour {
 		note.Init(this);
 		notes.Add(note);
     }
+
+    #region Goals
+    private int currentGoalIndex = 0;
+    private int currentBeatTowardsGoal = 0;
+    public void MarkGoal(Note note)
+    {
+		if(currentGoalIndex >= goals.Count)
+			return;
+		
+		if(goals[currentGoalIndex].Matches( note ) && goals[currentGoalIndex].beatIndex == currentBeatTowardsGoal)
+		{
+			goals[currentGoalIndex++].Complete = true;
+		}
+		else
+		{
+			Debug.Log( "Fail: " + note.pitch.ToString() );
+			currentGoalIndex = 0;
+			foreach(var g in goals)
+				g.Complete = false;
+		}
+    }
+
+    public bool IsGoalComplete
+    {
+    	get
+    	{
+    		return goals.TrueForAll( (o) => o.Complete );
+    	}
+    }
+    #endregion
+
 }
 
 static class Vector2IntExtensions {
