@@ -36,6 +36,9 @@ public class Note : MonoBehaviour {
     [NonSerialized]
     public bool updated;
 
+    [NonSerialized]
+    public bool alive = true;
+
     Coroutine moveCo;
 
     public void Init ( Grid grid, bool updateGridPos = true ) {
@@ -120,16 +123,35 @@ public class Note : MonoBehaviour {
     }
 
     IEnumerator GracefulDestroy () {
+        alive = false;
         Debug.Break();
 
 
-        while( lineHistory.Count > 0 ) {
-            foreach( var pos in lineHistory ) {
-                DebugExtension.DebugPoint( pos );
+        while( lineHistory.Count > 1 ) {
+            var time = 0f;
+            var moveSpeed = (float)grid.frequency;
+
+            var start = lineHistory[ 0 ];
+            var end = lineHistory[ 1 ];
+            while( time < moveSpeed ) {
+                time += Time.deltaTime;
+                var t = time / moveSpeed;
+
+                lineHistory[ 0 ] = Vector3.Lerp( start, end, t );
+
+                foreach( var pos in lineHistory ) {
+                    DebugExtension.DebugPoint( pos );
+                }
+                yield return null;
             }
 
-            yield return null;
+            lineHistory.RemoveAt( 0 );
+
+            line.positionCount = lineHistory.Count;
+            line.SetPositions( lineHistory.ToArray() );
         }
+
+        Destroy( gameObject );
     }
 
     void OnDrawGizmos () {
