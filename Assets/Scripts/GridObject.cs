@@ -40,4 +40,8 @@ public abstract class GridObject : MonoBehaviour {
 	}
 
 	public abstract void OnNoteEnter ( Note note );
+
+	public virtual void OnStop () {
+		
+	}
 }
