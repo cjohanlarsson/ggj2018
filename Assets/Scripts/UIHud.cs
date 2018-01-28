@@ -8,6 +8,8 @@ public class UIHud : MonoBehaviour
 {
 	[SerializeField] Button backToMain;
 	[SerializeField] Button reset;
+	[SerializeField] Button play;
+	[SerializeField] Text playText;
 	[SerializeField] GameObject youWinScreen;
 
 	void Awake() {
@@ -17,6 +19,15 @@ public class UIHud : MonoBehaviour
 
 		reset.onClick.AddListener( () => {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		} );
+
+		play.onClick.AddListener( () => {
+			Grid.Singleton.SetPlaying( !Grid.Singleton.isPlaying );
+			if( Grid.Singleton.isPlaying ) {
+				playText.text = "Stop";
+			} else {
+				playText.text = "Play";
+			}
 		} );
 	}
 
