@@ -100,7 +100,7 @@ public class Grid : MonoBehaviour {
 					obj.OnNoteEnter( note );
 				}
 
-				note.UpdateAnimations();
+				if( note.alive ) note.UpdateAnimations();
 			}
 
 			foreach(var e in emitters) {
