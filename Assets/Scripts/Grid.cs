@@ -25,6 +25,7 @@ public class Grid : MonoBehaviour {
 	public List<Emitter> emitters;
 	public List<Output> outputs;
 
+	public Note notePrefab;
 	bool requiresUpdate;
 
 	void Awake () {
@@ -42,7 +43,6 @@ public class Grid : MonoBehaviour {
 			if( obj is Output ) {
 				outputs.Add( (Output)obj );
 			}
-
 			gridObjectsByPos.Add( obj.gridPos, obj );
 		}
 
@@ -57,7 +57,7 @@ public class Grid : MonoBehaviour {
 	void Update () {
 		if( requiresUpdate ) {
 			requiresUpdate = false;
-			
+
 			var dirtyNotes = new List<Note>();
 			foreach( var note in notes ) {
 				var moved = note.Move();
@@ -73,6 +73,26 @@ public class Grid : MonoBehaviour {
 					obj.OnNoteEnter( note );
 				}
 			}
+
+			foreach(var e in emitters) {
+				if(e.CheckReady()) {
+					CreateNote(e.transform.position);
+				}
+			}
+		}
+	}
+
+	public bool UpdateGridObject( GridObject go, Vector2Int pos ) {
+		
+		if(!gridObjectsByPos.ContainsKey(pos))
+		{
+			gridObjectsByPos.Remove(go.gridPos);
+			gridObjectsByPos.Add(pos, go);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 
@@ -108,6 +128,12 @@ public class Grid : MonoBehaviour {
 		}
 		return Vector2Int.zero;
 	}
+
+    void CreateNote(Vector3 pos) {
+		var note = GameObject.Instantiate(notePrefab, pos, Quaternion.identity);
+		note.Init(this);
+		notes.Add(note);
+    }
 }
 
 static class Vector2IntExtensions {

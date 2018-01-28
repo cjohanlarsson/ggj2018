@@ -4,4 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Main.unity
+    guid: abe1e793b2563486b87660d08f12e72e
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: 6fdfeddc082f74342a90de7107495f35
+  - enabled: 1
+    path: Assets/Scenes/Nate.unity
+    guid: 4a3f1201055d84b00825f035ee6547db

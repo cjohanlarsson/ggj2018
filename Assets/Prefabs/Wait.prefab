@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4772725700036670}
   - component: {fileID: 114717957298180248}
+  - component: {fileID: 65743975406981820}
   m_Layer: 0
   m_Name: Wait
   m_TagString: Untagged
@@ -112,6 +113,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1872309567254392}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65743975406981820
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853739407341916}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114717957298180248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,5 +137,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
-  gridPos: {x: 0, y: 0}
-  waitTime: 1
+  waitTime: 0
