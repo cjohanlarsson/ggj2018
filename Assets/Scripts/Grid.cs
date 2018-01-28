@@ -49,12 +49,14 @@ public class Grid : MonoBehaviour {
 			note.Init( this );
 		}
 
-		beatTimer = AudioSettings.dspTime * sampleRate;
+		// beatTimer = AudioSettings.dspTime * sampleRate;
+		beatTimer = Time.time;
 		frequency = 60.0 / bpm;
 	}
 
 	void Update () {
-		if( requiresUpdate ) {
+		if( Time.time > beatTimer ) {
+			beatTimer += frequency;
 			requiresUpdate = false;
 
 			var dirtyNotes = new List<Note>();
@@ -71,6 +73,8 @@ public class Grid : MonoBehaviour {
 				if( gridObjectsByPos.TryGetValue( pos, out obj ) ) {
 					obj.OnNoteEnter( note );
 				}
+
+				note.UpdateAnimations();
 			}
 
 			foreach(var e in emitters) {
@@ -99,13 +103,13 @@ public class Grid : MonoBehaviour {
 		notes.Remove( note );
 		note.OnDestroy();
     }
-	
+
 	void OnAudioFilterRead ( float[] data, int channels ) {
-		var sample = AudioSettings.dspTime * sampleRate;
-		if( sample > beatTimer ) {
-			beatTimer = sample + ( frequency * sampleRate );
-			requiresUpdate = true;
-		}
+		// var sample = AudioSettings.dspTime * sampleRate;
+		// if( sample > beatTimer ) {
+		// 	beatTimer = sample + ( frequency * sampleRate );
+		// 	requiresUpdate = true;
+		// }
     }
 
     public Note CloneNote( Note note ) {

@@ -50,13 +50,17 @@ public class Note : MonoBehaviour {
             return false;
         } else {
             gridPos += Grid.GetDirectionVector( direction );
-            if( moveCo != null ) StopCoroutine( moveCo );
-            moveCo = StartCoroutine( MoveCo() );
             return true;
         }
     }
 
+    public void UpdateAnimations () {
+        if( moveCo != null ) StopCoroutine( moveCo );
+        moveCo = StartCoroutine( MoveCo() );
+    }
+
     private IEnumerator MoveCo() {
+        var projectedNextPos = ( gridPos + Grid.GetDirectionVector( direction ) ).ToVector3();
         var moveSpeed = (float)grid.frequency;
         var time = 0f;
         var endStartPos = positionHistory[ positionHistory.Count - 1 ].ToVector3();
@@ -64,9 +68,11 @@ public class Note : MonoBehaviour {
         var lineHistory = new List<Vector3>();
         var positionIndex = positionHistory.Count - 1;
         Vector3 startFrom = Vector3.zero;
-        Vector3 endTo = gridPos.ToVector3();
-        while( historyDuration > -1 && positionIndex > 0 ) {
-            if( historyDuration > 0 ) {
+        Vector3 endFrom = gridPos.ToVector3();
+        Vector3 endTo = projectedNextPos;
+
+        while( historyDuration > 0 && positionIndex > 0 ) {
+            if( historyDuration > 1 ) {
                 lineHistory.Add( positionHistory[ positionIndex ].ToVector3() );
             } else {
                 startFrom = positionHistory[ positionIndex ].ToVector3();
@@ -76,6 +82,7 @@ public class Note : MonoBehaviour {
         }
         lineHistory.Add( startFrom );
         lineHistory.Reverse();
+        lineHistory.Add( endFrom );
         lineHistory.Add( endTo );
 
         line.positionCount = lineHistory.Count;
@@ -83,7 +90,7 @@ public class Note : MonoBehaviour {
         while( time < moveSpeed ) {
             time += Time.deltaTime;
             var t = time / moveSpeed;
-
+            
             lineHistory[ 0 ] = Vector3.Lerp( startFrom, lineHistory[ 1 ], t );
             lineHistory[ lineHistory.Count - 1 ] = Vector3.Lerp( lineHistory[ lineHistory.Count - 2 ], endTo, t );
 

@@ -326,11 +326,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 120790838048034372, guid: 66e5a310ba9ba4732a5c3163c165ce6a,
-        type: 2}
-      propertyPath: m_Parameters.alignment
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 114223074214878248, guid: 66e5a310ba9ba4732a5c3163c165ce6a,
         type: 2}
       propertyPath: duration
@@ -478,6 +473,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4399538623051678, guid: a48eab62ce4df4132951122a016ce429, type: 2}
       propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114294328611583216, guid: a48eab62ce4df4132951122a016ce429,
+        type: 2}
+      propertyPath: redirectDirection
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
