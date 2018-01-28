@@ -84,7 +84,6 @@ public class Note : MonoBehaviour {
     }
 
     private IEnumerator MoveCo() {
-        Debug.Log( "moving" );
         var projectedNextPos = ( gridPos + Grid.GetDirectionVector( direction ) ).ToVector3();
         var moveSpeed = (float)grid.frequency;
         var time = 0f;
