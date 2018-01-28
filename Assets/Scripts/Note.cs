@@ -61,7 +61,6 @@ public class Note : MonoBehaviour {
 
     private IEnumerator MoveCo() {
         var projectedNextPos = ( gridPos + Grid.GetDirectionVector( direction ) ).ToVector3();
-        Debug.Log( projectedNextPos );
         var moveSpeed = (float)grid.frequency;
         var time = 0f;
         var historyDuration = duration;
@@ -98,8 +97,6 @@ public class Note : MonoBehaviour {
 
         line.positionCount = lineHistory.Count;
 
-        Debug.Log( time + " " + moveSpeed );
-        
         while( time < moveSpeed ) {
             time += Time.deltaTime;
             var t = time / moveSpeed;

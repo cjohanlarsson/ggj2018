@@ -116,7 +116,7 @@ public class Grid : MonoBehaviour {
 				}
 			}
 
-			if(goals[0].Complete)
+			if(goals.Count > 0 && goals[0].Complete)
 				currentBeatTowardsGoal++;
 		}
 	}
