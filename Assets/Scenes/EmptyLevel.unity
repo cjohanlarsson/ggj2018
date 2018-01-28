@@ -448,7 +448,7 @@ Prefab:
     - target: {fileID: 114729833923113438, guid: b813c4e9b8d1149e2ba2d176df4da620,
         type: 2}
       propertyPath: emitPerBeats
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b813c4e9b8d1149e2ba2d176df4da620, type: 2}
@@ -920,16 +920,13 @@ MonoBehaviour:
   - pitch: 0
     beatIndex: 0
   - pitch: 0
-    beatIndex: 1
-  - pitch: 0
     beatIndex: 2
-  - pitch: 0
-    beatIndex: 3
+  frequency: 0
   notes: []
   gridObjects: []
   emitters: []
   outputs: []
-  notePrefab: {fileID: 114210209782287154, guid: 116630cdae3534b0787fc2e1d3c49119,
+  notePrefab: {fileID: 114223074214878248, guid: 66e5a310ba9ba4732a5c3163c165ce6a,
     type: 2}
 --- !u!4 &1927837162
 Transform:

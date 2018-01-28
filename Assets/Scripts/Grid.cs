@@ -36,7 +36,7 @@ public class Grid : MonoBehaviour {
 	[SerializeField] private List<OutputGoal> goals;
 
 	int sampleRate;
-	double frequency;
+	public double frequency;
 
 	public List<Note> notes;
 	public List<GridObject> gridObjects;
@@ -63,16 +63,15 @@ public class Grid : MonoBehaviour {
 			if( obj is Output ) {
 				outputs.Add( (Output)obj );
 			}
-			
 		}
 
 		foreach( var note in notes ) {
 			note.Init( this );
 		}
 
-		beatTimer = AudioSettings.dspTime * sampleRate;
+		// beatTimer = AudioSettings.dspTime * sampleRate;
+		beatTimer = Time.time;
 		frequency = 60.0 / bpm;
-		Debug.Log( frequency );
 	}
 
 	void OnDestroy() {
@@ -80,7 +79,8 @@ public class Grid : MonoBehaviour {
 	}
 
 	void Update () {
-		if( requiresUpdate ) {
+		if( Time.time > beatTimer ) {
+			beatTimer += frequency;
 			requiresUpdate = false;
 
 			var dirtyNotes = new List<Note>();
@@ -97,6 +97,8 @@ public class Grid : MonoBehaviour {
 				if( gridObjectsByPos.TryGetValue( pos, out obj ) ) {
 					obj.OnNoteEnter( note );
 				}
+
+				note.UpdateAnimations();
 			}
 
 			foreach(var e in emitters) {
@@ -135,13 +137,19 @@ public class Grid : MonoBehaviour {
 		notes.Remove( note );
 		note.OnDestroy();
     }
-	
+
 	void OnAudioFilterRead ( float[] data, int channels ) {
-		var sample = AudioSettings.dspTime * sampleRate;
-		if( sample > beatTimer ) {
-			beatTimer = sample + ( frequency * sampleRate );
-			requiresUpdate = true;
-		}
+		// var sample = AudioSettings.dspTime * sampleRate;
+		// if( sample > beatTimer ) {
+		// 	beatTimer = sample + ( frequency * sampleRate );
+		// 	requiresUpdate = true;
+		// }
+    }
+
+    public Note CloneNote( Note note ) {
+		var clone = Instantiate( note );
+		notes.Add( clone );
+		return clone;
     }
 
 	public static Vector2Int GetDirectionVector ( MoveDirection direction ) {
@@ -157,12 +165,6 @@ public class Grid : MonoBehaviour {
 		}
 		return Vector2Int.zero;
 	}
-
-    public Note CloneNote( Note note ) {
-		var clone = Instantiate( note );
-		notes.Add( clone );
-		return clone;
-    }
 
     void CreateNote(Vector3 pos) {
 		var note = GameObject.Instantiate(notePrefab, pos, Quaternion.identity);
@@ -199,4 +201,11 @@ public class Grid : MonoBehaviour {
     	}
     }
     #endregion
+
+}
+
+static class Vector2IntExtensions {
+	public static Vector3 ToVector3 ( this Vector2Int vec ) {
+		return new Vector3( vec.x, vec.y );
+	}
 }
