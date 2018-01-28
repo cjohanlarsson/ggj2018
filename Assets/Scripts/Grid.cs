@@ -10,12 +10,31 @@ public enum MoveDirection {
 	Left
 }
 
+[System.Serializable]
+public class OutputGoal
+{
+	public int pitch;
+	public int beatIndex;
+
+	public bool Complete { get; set; }
+
+	public bool Matches(Note n)
+	{
+		return n.pitch == pitch;
+	}
+
+}
+
 [RequireComponent( typeof( AudioSource ))]
 public class Grid : MonoBehaviour {
+	public static Grid Singleton;
+
 	public double beatTimer;
 	public float currentBeat;
 	public int bpm;
-	
+	public int maxNoteBeatLifetime = 10;
+	[SerializeField] private List<OutputGoal> goals;
+
 	int sampleRate;
 	double frequency;
 
@@ -29,6 +48,7 @@ public class Grid : MonoBehaviour {
 	bool requiresUpdate;
 
 	void Awake () {
+		Singleton = this;
 		sampleRate = AudioSettings.outputSampleRate;
 		var allGridObjects = FindObjectsOfType<GridObject>();
 		var allNotes = FindObjectsOfType<Note>();
@@ -53,6 +73,10 @@ public class Grid : MonoBehaviour {
 		beatTimer = AudioSettings.dspTime * sampleRate;
 		frequency = 60.0 / bpm;
 		Debug.Log( frequency );
+	}
+
+	void OnDestroy() {
+		Singleton = null;
 	}
 
 	void Update () {
@@ -80,6 +104,16 @@ public class Grid : MonoBehaviour {
 					CreateNote(e.transform.position);
 				}
 			}
+
+			for(int i=0;i<this.notes.Count;i++) {
+				if(this.notes[i].BeatLifetime > maxNoteBeatLifetime) {
+					this.notes[i].OnDestroy();
+					this.notes.RemoveAt(i--);
+				}
+			}
+
+			if(goals[0].Complete)
+				currentBeatTowardsGoal++;
 		}
 	}
 
@@ -135,4 +169,34 @@ public class Grid : MonoBehaviour {
 		note.Init(this);
 		notes.Add(note);
     }
+
+    #region Goals
+    private int currentGoalIndex = 0;
+    private int currentBeatTowardsGoal = 0;
+    public void MarkGoal(Note note)
+    {
+		if(currentGoalIndex >= goals.Count)
+			return;
+		
+		if(goals[currentGoalIndex].Matches( note ) && goals[currentGoalIndex].beatIndex == currentBeatTowardsGoal)
+		{
+			goals[currentGoalIndex++].Complete = true;
+		}
+		else
+		{
+			Debug.Log( "Fail: " + note.pitch.ToString() );
+			currentGoalIndex = 0;
+			foreach(var g in goals)
+				g.Complete = false;
+		}
+    }
+
+    public bool IsGoalComplete
+    {
+    	get
+    	{
+    		return goals.TrueForAll( (o) => o.Complete );
+    	}
+    }
+    #endregion
 }

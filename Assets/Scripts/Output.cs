@@ -6,5 +6,6 @@ public class Output : GridObject {
         Debug.Log( "Played note at pitch " + note.pitch + " and duration " + note.duration );
         grid.DestroyNote( note );
         MusicPlayer.Singleton.PlayNote(note.pitch);
+        grid.MarkGoal(note);
     }
 }
