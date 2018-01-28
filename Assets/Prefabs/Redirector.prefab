@@ -221,8 +221,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6d43bb149bb4c43abf88e4868fb94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  graphics: {fileID: 0}
   color: 0
-  renderersToSwapForColor: []
+  renderersToSwapForColor:
+  - {fileID: 23830224903945968}
   grid: {fileID: 0}
   redirectDirection: 2
   redirectDirectionImg: {fileID: 1266097842975968}
