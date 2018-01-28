@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class DragDrop : MonoBehaviour 
 {
+	public Grid grid;
 	GridObject dragObject;
 
 	// Update is called once per frame
 	void Update () {
+		if( Grid.Singleton.isPlaying ) {
+			return;
+		}
 		if(dragObject == null)
 		{
 			if(Input.GetMouseButtonDown(0))
@@ -17,6 +21,7 @@ public class DragDrop : MonoBehaviour
 				if( Physics.Raycast( ray, out hitInfo, 1000f) )
 				{
 					dragObject = hitInfo.collider.GetComponent<GridObject>();
+					dragObject.grid.RemoveObject( dragObject );
 				}
 			}
 		}
@@ -32,6 +37,7 @@ public class DragDrop : MonoBehaviour
 				dragPos.x = Mathf.Round(dragPos.x);
 				dragPos.y = Mathf.Round(dragPos.y);
 
+				dragObject.grid.AddObject( dragObject );
 				dragObject.SetGridPos( new Vector2Int( Mathf.RoundToInt(dragPos.x), Mathf.RoundToInt(dragPos.y) ) );
 				dragObject.transform.position = dragObject.gridPos.ToVector3();
 

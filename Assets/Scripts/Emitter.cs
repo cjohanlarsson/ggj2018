@@ -10,8 +10,16 @@ public class Emitter : GridObject {
 
 	public int maxEmitted;
 
-	void Awake() {
+	public int remainingEmitted;
+
+	public override void Init( Grid grid ) {
+		base.Init( grid );
+		OnStop();
+	}
+
+	public override void OnStop () {
 		beatsLeft = 0;
+		remainingEmitted = maxEmitted;
 	}
 
     public override void OnNoteEnter( Note note ) {
@@ -19,12 +27,12 @@ public class Emitter : GridObject {
     }
 
 	public bool CheckReady() {
-		if( maxEmitted <= 0 ) return false;
+		if( remainingEmitted <= 0 ) return false;
 		beatsLeft--;
 		if(beatsLeft <= 0)
 		{
 			beatsLeft = emitPerBeats;
-			maxEmitted -= 1;
+			remainingEmitted -= 1;
 			return true;
 		}
 		else

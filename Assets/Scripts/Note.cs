@@ -181,4 +181,8 @@ public class Note : MonoBehaviour {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere( transform.position, 0.25f );
     }
+
+    internal void DestroyForStop() {
+        Destroy( gameObject );
+    }
 }

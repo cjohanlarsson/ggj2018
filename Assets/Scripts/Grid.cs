@@ -31,11 +31,12 @@ public class Grid : MonoBehaviour {
 
     public double beatTimer;
 	public float currentBeat;
-	public int bpm;
+
+    public int bpm;
 	public int maxNoteBeatLifetime = 1000;
 	[SerializeField] private List<OutputGoal> goals;
 
-	int sampleRate;
+    int sampleRate;
 	public double frequency;
 
 	public List<Note> notes;
@@ -47,6 +48,8 @@ public class Grid : MonoBehaviour {
 	public Note notePrefab;
 	bool requiresUpdate;
 
+	public bool isPlaying { get; private set; }
+
 	public int BeatsTicked { get; private set; }
 
 	void Awake () {
@@ -55,7 +58,7 @@ public class Grid : MonoBehaviour {
 
 		// beatTimer = AudioSettings.dspTime * sampleRate;
 		frequency = 60.0 / bpm;
-		beatTimer = Time.time + frequency;
+		beatTimer = Time.time;
 
 		
 		var allGridObjects = FindObjectsOfType<GridObject>();
@@ -76,6 +79,7 @@ public class Grid : MonoBehaviour {
 		foreach( var note in notes ) {
 			note.Init( this );
 		}
+		// Stop();
 	}
 
 	void OnDestroy() {
@@ -83,6 +87,8 @@ public class Grid : MonoBehaviour {
 	}
 
 	void Update () {
+		if( !isPlaying ) return;
+
 		if( Time.time > beatTimer ) {
 			beatTimer += frequency;
 			requiresUpdate = false;
@@ -98,9 +104,14 @@ public class Grid : MonoBehaviour {
 			foreach( var note in dirtyNotes ) {
 				var pos = note.gridPos;
 				GridObject obj;
-				if( gridObjectsByPos.TryGetValue( pos, out obj ) ) {
-					if(obj.color == NoteColor.None || obj.color == note.color)
-						obj.OnNoteEnter( note );
+				var inBounds = pos.x < 30 && pos.x > -30 && pos.y > -30 && pos.y < 30;
+				if( note.BeatLifetime > maxNoteBeatLifetime || !inBounds ) {
+					DestroyNote( note );
+				} else {
+					if( gridObjectsByPos.TryGetValue( pos, out obj ) ) {
+						if(obj.color == NoteColor.None || obj.color == note.color)
+							obj.OnNoteEnter( note );
+					}
 				}
 
 				if( note.alive ) note.UpdateAnimations();
@@ -112,12 +123,13 @@ public class Grid : MonoBehaviour {
 				}
 			}
 
-			for(int i=0;i<this.notes.Count;i++) {
-				if(this.notes[i].BeatLifetime > maxNoteBeatLifetime) {
-					this.notes[i].DestroyNote();
-					this.notes.RemoveAt(i--);
-				}
-			}
+			// for(int i=0;i<this.notes.Count;i++) {
+			// 	var note = notes[ i ];
+			// 	if(note.BeatLifetime > maxNoteBeatLifetime) {
+			// 		note.DestroyNote();
+			// 		this.notes.RemoveAt(i--);
+			// 	}
+			// }
 
 			if(goals.Count > 0 && goals[0].Complete)
 				currentBeatTowardsGoal++;
@@ -139,6 +151,16 @@ public class Grid : MonoBehaviour {
 			return false;
 		}
 	}
+
+    public void RemoveObject ( GridObject obj ) {
+		gridObjectsByPos.Remove( obj.gridPos );
+		gridObjects.Remove( obj );
+    }
+
+    public void AddObject ( GridObject obj ) {
+		gridObjectsByPos.Add( obj.gridPos, obj );
+		gridObjects.Add( obj );
+    }
 
     public void DestroyNote ( Note note ) {
 		notes.Remove( note );
@@ -210,6 +232,33 @@ public class Grid : MonoBehaviour {
 
 		notes.Add(note);
     }
+
+    public void SetPlaying( bool playing ) {
+		isPlaying = playing;
+
+		if( !isPlaying ) {
+			Stop();
+		} else {
+			beatTimer = Time.time;
+		}
+    }
+
+	void Stop () {
+		beatTimer = 0;
+		BeatsTicked = 0;
+		currentGoalIndex = 0;
+		currentBeatTowardsGoal = 0;
+
+		foreach( var note in notes ) {
+			note.DestroyForStop();
+		}
+
+		foreach( var obj in gridObjects ) {
+			obj.OnStop();
+		}
+
+		notes.Clear();
+	}
 
     #region Goals
     private int currentGoalIndex = 0;
