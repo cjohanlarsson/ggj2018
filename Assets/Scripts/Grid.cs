@@ -53,6 +53,7 @@ public class Grid : MonoBehaviour {
 	public int BeatsTicked { get; private set; }
 
 	void Awake () {
+		isPlaying = true;
 		Singleton = this;
 		sampleRate = AudioSettings.outputSampleRate;
 
@@ -226,6 +227,7 @@ public class Grid : MonoBehaviour {
 
     void CreateNote(Emitter e) {
 		var note = GameObject.Instantiate(notePrefab, e.transform.position, Quaternion.identity);
+		note.direction = e.emitDirection;
 		note.duration = e.duration;
 		note.color = e.color;
 		note.Init(this);
