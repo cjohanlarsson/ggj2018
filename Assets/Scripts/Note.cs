@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum NoteColor
+{
+	None = 0,
+	Red,
+	Green,
+	Blue
+}
+
 public class Note : MonoBehaviour {
 
     [SerializeField]
@@ -27,6 +35,17 @@ public class Note : MonoBehaviour {
 	public float duration = 1; // in beats
 	public MoveDirection direction;
 	public int pitch;
+	private NoteColor _color;
+	public NoteColor color
+	{
+		get { return _color; }
+		set { 
+			_color = value; 
+			if(this.line != null) { 
+				this.line.startColor = this.line.endColor = Visuals.Singleton.ConvertNoteColorToColor(this._color); 
+			} 
+		}
+	}
 
     public int beatWait;
     public int BeatLifetime { get; private set; }

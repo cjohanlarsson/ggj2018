@@ -47,6 +47,8 @@ public class Grid : MonoBehaviour {
 	public Note notePrefab;
 	bool requiresUpdate;
 
+	public int BeatsTicked { get; private set; }
+
 	void Awake () {
 		Singleton = this;
 		sampleRate = AudioSettings.outputSampleRate;
@@ -82,6 +84,7 @@ public class Grid : MonoBehaviour {
 
 	void Update () {
 		if( Time.time > beatTimer ) {
+			BeatsTicked++;
 			beatTimer += frequency;
 			requiresUpdate = false;
 
@@ -97,7 +100,8 @@ public class Grid : MonoBehaviour {
 				var pos = note.gridPos;
 				GridObject obj;
 				if( gridObjectsByPos.TryGetValue( pos, out obj ) ) {
-					obj.OnNoteEnter( note );
+					if(obj.color == NoteColor.None || obj.color == note.color)
+						obj.OnNoteEnter( note );
 				}
 
 				note.UpdateAnimations();
@@ -105,7 +109,7 @@ public class Grid : MonoBehaviour {
 
 			foreach(var e in emitters) {
 				if(e.CheckReady()) {
-					CreateNote(e.transform.position);
+					CreateNote(e);
 				}
 			}
 
@@ -168,9 +172,12 @@ public class Grid : MonoBehaviour {
 		return Vector2Int.zero;
 	}
 
-    void CreateNote(Vector3 pos) {
-		var note = GameObject.Instantiate(notePrefab, pos, Quaternion.identity);
+    void CreateNote(Emitter e) {
+		var note = GameObject.Instantiate(notePrefab, e.transform.position, Quaternion.identity);
+		note.duration = e.duration;
+		note.color = e.color;
 		note.Init(this);
+
 		notes.Add(note);
     }
 

@@ -1,5 +1,9 @@
 using UnityEngine;
 public abstract class GridObject : MonoBehaviour {
+
+	public NoteColor color;
+	public Renderer[] renderersToSwapForColor;
+
 	[HideInInspector]
 	public Grid grid;
 	private Vector2Int _gridPos;
@@ -23,6 +27,12 @@ public abstract class GridObject : MonoBehaviour {
 	public virtual void Init ( Grid grid ) {
 		this.grid = grid;
 		SetGridPos( new Vector2Int( (int)transform.position.x, (int)transform.position.y ) );
+
+		if(renderersToSwapForColor != null && color != NoteColor.None) {
+			foreach(var r in renderersToSwapForColor) {
+				r.sharedMaterial = Visuals.Singleton.ConvertNoteColorToMaterial( color );
+			}
+		}
 	}
 
 	public abstract void OnNoteEnter ( Note note );
