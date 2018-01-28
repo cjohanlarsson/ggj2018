@@ -38,7 +38,6 @@ public class Grid : MonoBehaviour {
 			if( obj is Emitter ) {
 				emitters.Add( (Emitter)obj );
 			}
-			gridObjectsByPos.Add( obj.gridPos, obj );
 		}
 
 		foreach( var note in notes ) {
@@ -64,6 +63,20 @@ public class Grid : MonoBehaviour {
 					obj.OnNoteEnter( note );
 				}
 			}
+		}
+	}
+
+	public bool UpdateGridObject( GridObject go, Vector2Int pos ) {
+		
+		if(!gridObjectsByPos.ContainsKey(pos))
+		{
+			gridObjectsByPos.Remove(go.gridPos);
+			gridObjectsByPos.Add(pos, go);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 
