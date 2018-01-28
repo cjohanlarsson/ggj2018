@@ -111,7 +111,7 @@ public class Grid : MonoBehaviour {
 
 			for(int i=0;i<this.notes.Count;i++) {
 				if(this.notes[i].BeatLifetime > maxNoteBeatLifetime) {
-					this.notes[i].OnDestroy();
+					this.notes[i].DestroyNote();
 					this.notes.RemoveAt(i--);
 				}
 			}
