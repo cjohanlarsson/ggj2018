@@ -43,7 +43,7 @@ public class Emitter : GridObject {
 
     private void UpdateRotationGraphics() {
         Vector3 d1 = Grid.GetDirectionVector(emitDirection).ToVector3();
-        emitDirectionImg.transform.localPosition = d1 * 0.2800119f;
+        emitDirectionImg.transform.localPosition = d1 * 0.168f;
 
         var angle = Vector3.Angle(Vector3.up, d1);
 

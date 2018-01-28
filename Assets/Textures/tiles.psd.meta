@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e975ce5fdc099164d899ff9dd718d569
-timeCreated: 1517179523
+timeCreated: 1517182273
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,8 @@ TextureImporter:
     21300014: pitch_dir
     21300016: output
     21300018: pinned_sprite
+    21300020: split_center
+    21300022: split_dir
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -235,6 +237,34 @@ TextureImporter:
         height: 202
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: split_center
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 1363
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: split_dir
+      rect:
+        serializedVersion: 2
+        x: 1431
+        y: 1419
+        width: 60
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

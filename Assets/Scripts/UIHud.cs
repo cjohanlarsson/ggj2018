@@ -44,8 +44,8 @@ public class UIHud : MonoBehaviour
 	}
 
 	void Update () {
-		youWinScreen.gameObject.SetActive(Grid.Singleton != null && Grid.Singleton.IsGoalComplete);
 		var goals = Grid.Singleton.goals;
+		if( goals.Count > 0 ) youWinScreen.gameObject.SetActive(Grid.Singleton != null && Grid.Singleton.IsGoalComplete);
 		for(int i=0;i<goals.Count;i++)
 			notes[i].color = goals[i].Complete ? successColor : blankColor;
 	}

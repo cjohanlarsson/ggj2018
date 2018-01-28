@@ -810,7 +810,7 @@ Prefab:
     - target: {fileID: 114006629264396300, guid: bfa94f963fd294db9961b193fbfd3f3d,
         type: 2}
       propertyPath: color
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bfa94f963fd294db9961b193fbfd3f3d, type: 2}

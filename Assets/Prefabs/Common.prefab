@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224430087369549018}
   - component: {fileID: 222979104938253502}
   - component: {fileID: 114268438197717340}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 224983911177993556}
   - component: {fileID: 222744494744411876}
   - component: {fileID: 114722527290117936}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: VertLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 222429097057625916}
   - component: {fileID: 114768841054371844}
   - component: {fileID: 114729207756586302}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResetButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 224029770068096016}
   - component: {fileID: 222217958853128916}
   - component: {fileID: 114761336846147310}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: YouWin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 114339324623924358}
   - component: {fileID: 114872255943083002}
   - component: {fileID: 114682429432397812}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UIHud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 224823244156760080}
   - component: {fileID: 222733530442919276}
   - component: {fileID: 114038914719854824}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 224389296850570688}
   - component: {fileID: 222837138112196586}
   - component: {fileID: 114486956423704550}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HoriLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 224665532671313328}
   - component: {fileID: 222686258257401482}
   - component: {fileID: 114456543460870026}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SheetBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 222825720936788840}
   - component: {fileID: 114312706380117808}
   - component: {fileID: 114206689545211610}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BackToMainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 224100849930643594}
   - component: {fileID: 222981828305971052}
   - component: {fileID: 114985748596689228}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 222616127375923092}
   - component: {fileID: 114146338893148706}
   - component: {fileID: 114667930334162506}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 224853440244358430}
   - component: {fileID: 222021839326782380}
   - component: {fileID: 114120606174382626}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 224333899739696082}
   - component: {fileID: 222748999766115782}
   - component: {fileID: 114129077374884752}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Note
   m_TagString: Untagged
   m_Icon: {fileID: 0}

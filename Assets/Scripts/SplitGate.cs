@@ -46,7 +46,7 @@ public class SplitGate : GridObject {
             angle = -angle;
         }
 
-        direction1Img.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        direction1Img.transform.rotation = Quaternion.AngleAxis(angle, Vector3.back);
 
         angle = Vector3.Angle(Vector3.up, d2);
 
@@ -55,6 +55,6 @@ public class SplitGate : GridObject {
             angle = -angle;
         }
 
-        direction2Img.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        direction2Img.transform.rotation = Quaternion.AngleAxis(angle, Vector3.back );
     }
 }

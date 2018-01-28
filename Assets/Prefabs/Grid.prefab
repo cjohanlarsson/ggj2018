@@ -193,9 +193,7 @@ MonoBehaviour:
   currentBeat: 0
   bpm: 240
   maxNoteBeatLifetime: 1000
-  goals:
-  - pitch: 0
-    beatIndex: 0
+  goals: []
   frequency: 0
   notes: []
   gridObjects: []
