@@ -124,7 +124,7 @@ public class Note : MonoBehaviour {
 
     IEnumerator GracefulDestroy () {
         alive = false;
-        Debug.Break();
+        // Debug.Break();
 
 
         while( lineHistory.Count > 1 ) {
