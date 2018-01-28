@@ -30,7 +30,8 @@ public class Grid : MonoBehaviour {
 	public static Grid Singleton;
 
     public double beatTimer;
-	public float currentBeat;
+
+    public float currentBeat;
 
     public int bpm;
 	public int maxNoteBeatLifetime = 1000;
@@ -197,7 +198,7 @@ public class Grid : MonoBehaviour {
 		return Vector2Int.zero;
 	}
 
-    internal static MoveDirection RotateDirection( MoveDirection direction, bool clockwise = true ) {
+    public static MoveDirection RotateDirection( MoveDirection direction, bool clockwise = true ) {
 		if( clockwise ) {
 			switch( direction ) {
 				case MoveDirection.Up:
@@ -224,6 +225,37 @@ public class Grid : MonoBehaviour {
 
 		return MoveDirection.Up;
     }
+
+    public static MoveDirection GetOppositeDirection( MoveDirection direction ) {
+		switch( direction ) {
+			case MoveDirection.Up:
+				return MoveDirection.Down;
+			case MoveDirection.Right:
+				return MoveDirection.Left;
+			case MoveDirection.Down:
+				return MoveDirection.Up;
+			case MoveDirection.Left:
+				return MoveDirection.Right;
+		}
+
+		return MoveDirection.Up;
+    }
+
+	public static Vector3 GetParticleOffset ( MoveDirection direction, float scale ) {
+		return Grid.GetDirectionVector( Grid.GetOppositeDirection( direction ) ).ToVector3() * scale;
+	}
+
+	public static Quaternion GetDirectionRotation ( MoveDirection direction ) {
+        Vector3 d1 = Grid.GetDirectionVector(direction).ToVector3();
+        var angle = Vector3.Angle(Vector3.up, d1);
+
+        if (direction == MoveDirection.Left)
+        {
+            angle = -angle;
+        }
+
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+	}
 
     void CreateNote(Emitter e) {
 		var note = GameObject.Instantiate(notePrefab, e.transform.position, Quaternion.identity);
@@ -261,6 +293,14 @@ public class Grid : MonoBehaviour {
 
 		notes.Clear();
 	}
+
+    public static ParticleDestruct MakeNoteCollideParticles ( Note note ) {
+		var particles = Instantiate( Resources.Load<ParticleDestruct>( "gfx/line_collide_particles" ) );
+		particles.SetColor( note.color );
+        float freq = (float)Grid.Singleton.frequency;
+        particles.countdown = note.duration * freq - 0.04f;
+        return particles;
+    }
 
     #region Goals
     private int currentGoalIndex = 0;

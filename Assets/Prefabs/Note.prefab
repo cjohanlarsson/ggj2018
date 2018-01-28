@@ -87,6 +87,7 @@ MonoBehaviour:
   duration: 2
   direction: 1
   pitch: 0
+  _color: 0
   beatWait: 0
 --- !u!120 &120790838048034372
 LineRenderer:
@@ -164,7 +165,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

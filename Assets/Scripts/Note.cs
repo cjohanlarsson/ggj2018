@@ -45,7 +45,8 @@ public class Note : MonoBehaviour {
 		set { 
 			_color = value;
 			if(this.line != null) {
-				this.line.startColor = this.line.endColor = Visuals.Singleton.ConvertNoteColorToColor(this._color); 
+				this.line.endColor = Visuals.Singleton.ConvertNoteColorToColor(this._color);
+                switchColorNextBeat = true;
 			} 
 		}
 	}
@@ -61,6 +62,8 @@ public class Note : MonoBehaviour {
 
     Coroutine moveCo;
 
+    bool switchColorNextBeat = false;
+
     public void Init ( Grid grid, bool updateGridPos = true ) {
         this.grid = grid;
 		if( updateGridPos ) _gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
@@ -69,6 +72,11 @@ public class Note : MonoBehaviour {
     }
 
     public bool Move () {
+        if( switchColorNextBeat ) {
+            switchColorNextBeat = false;
+            this.line.startColor = Visuals.Singleton.ConvertNoteColorToColor(this._color);
+        }
+
 		BeatLifetime++;
         if( beatWait > 0 ) {
             beatWait -= 1;
@@ -80,7 +88,9 @@ public class Note : MonoBehaviour {
     }
 
     public void UpdateAnimations () {
-        if( moveCo != null ) StopCoroutine( moveCo );
+        if( moveCo != null ) {
+            StopCoroutine( moveCo );
+        }
         moveCo = StartCoroutine( MoveCo() );
     }
 
@@ -133,9 +143,21 @@ public class Note : MonoBehaviour {
             lineHistory[ 0 ] = Vector3.Lerp( startFrom, startTo, t );
             lineHistory[ lineHistory.Count - 1 ] = Vector3.Lerp( endFrom, endTo, t );
 
+            if( t > 0.9f ) {
+                if( switchColorNextBeat ) {
+                    switchColorNextBeat = false;
+                    this.line.startColor = Visuals.Singleton.ConvertNoteColorToColor(this._color);
+                }
+            }
+
             line.SetPositions( lineHistory.ToArray() );
 
             yield return null;
+        }
+        
+        if( switchColorNextBeat ) {
+            switchColorNextBeat = false;
+            this.line.startColor = Visuals.Singleton.ConvertNoteColorToColor(this._color);
         }
     }
 

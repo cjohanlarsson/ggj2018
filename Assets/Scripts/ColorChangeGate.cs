@@ -9,6 +9,10 @@ public class ColorChangeGate : GridObject {
 
 	public override void OnNoteEnter ( Note note ) {
 		note.color = colorsToChangeTo[this.grid.BeatsTicked % colorsToChangeTo.Length];
+
+        var particles = Grid.MakeNoteCollideParticles( note );
+        particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.15f );
+        particles.transform.rotation = Grid.GetDirectionRotation( Grid.GetOppositeDirection( note.direction ) );
 	}
 
 	void Update() {

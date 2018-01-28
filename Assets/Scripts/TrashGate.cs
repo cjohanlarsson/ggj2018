@@ -18,5 +18,8 @@ public class TrashGate : GridObject {
         } else {
             grid.DestroyNote( note );
         }
+        var particles = Grid.MakeNoteCollideParticles( note );
+        particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.15f );
+        particles.transform.rotation = Grid.GetDirectionRotation( note.direction );
     }
 }
