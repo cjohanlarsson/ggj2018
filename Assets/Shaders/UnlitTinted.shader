@@ -9,10 +9,15 @@
 	{
 		Tags
 		{ 
-			"Queue"="Transparent"
-			"RenderType"="Transparent"
+			"Queue"="Transparent" 
+			"IgnoreProjector"="True" 
+			"RenderType"="Transparent" 
+			"PreviewType"="Plane"
+			"CanUseSpriteAtlas"="True"
 		}
 
+		Cull Off
+		Lighting Off
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
 
@@ -21,8 +26,6 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			// make fog work
-			#pragma multi_compile_fog
 			
 			#include "UnityCG.cginc"
 
@@ -30,6 +33,7 @@
 			{
 				float4 vertex : POSITION;
 				float2 uv : TEXCOORD0;
+				float4 color : COLOR;
 			};
 
 			struct v2f
@@ -49,7 +53,7 @@
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				o.color = _Color;
+				o.color = v.color;
 				return o;
 			}
 			
