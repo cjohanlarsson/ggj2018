@@ -47,7 +47,7 @@ public class MusicPlayer : MonoBehaviour
 
     // Update is called every frame, if the
     // MonoBehaviour is enabled.
-	KeyCode[] keys = new KeyCode[] { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y };
+	/*KeyCode[] keys = new KeyCode[] { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y };
     void Update()
     {
     	for(int i=0;i<keys.Length;i++)
@@ -61,7 +61,7 @@ public class MusicPlayer : MonoBehaviour
         }
 
 
-    }
+    }*/
 
     public void PlayNote(int pitch, float duration)
     {
