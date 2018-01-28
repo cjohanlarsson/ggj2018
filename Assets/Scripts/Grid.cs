@@ -43,7 +43,6 @@ public class Grid : MonoBehaviour {
 			if( obj is Output ) {
 				outputs.Add( (Output)obj );
 			}
-			gridObjectsByPos.Add( obj.gridPos, obj );
 		}
 
 		foreach( var note in notes ) {
