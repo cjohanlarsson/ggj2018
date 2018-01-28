@@ -29,6 +29,9 @@ public class OutputGoal
 public class Grid : MonoBehaviour {
 	public static Grid Singleton;
 
+	public AnimationCurve pulseCurve;
+	public AnimationCurve waverCurve;
+
     public double beatTimer;
 
     public float currentBeat;
@@ -97,6 +100,7 @@ public class Grid : MonoBehaviour {
 
 			var dirtyNotes = new List<Note>();
 			foreach( var note in notes ) {
+				if( !note.alive ) continue;
 				var moved = note.Move();
 				if( moved ) {
 					dirtyNotes.Add( note );
@@ -117,6 +121,10 @@ public class Grid : MonoBehaviour {
 				}
 
 				if( note.alive ) note.UpdateAnimations();
+			}
+
+			foreach( var obj in gridObjects ) {
+				obj.Tick();
 			}
 
 			foreach(var e in emitters) {
@@ -181,6 +189,7 @@ public class Grid : MonoBehaviour {
 		var clone = Instantiate( note );
 		clone.grid = this;
 		notes.Add( clone );
+		clone.name = clone.name.Replace( "(Clone)", "" );
 		return clone;
     }
 
@@ -254,7 +263,7 @@ public class Grid : MonoBehaviour {
             angle = -angle;
         }
 
-        return Quaternion.AngleAxis(angle, Vector3.forward);
+        return Quaternion.AngleAxis(angle, Vector3.back);
 	}
 
     void CreateNote(Emitter e) {

@@ -421,8 +421,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2048142507
+  m_SortingLayer: -1
   m_SortingOrder: 0
 --- !u!33 &33737064215524060
 MeshFilter:
@@ -491,13 +491,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noteColors:
   - noteColor: 1
-    color: {r: 1, g: 0, b: 0, a: 1}
+    color: {r: 1, g: 0.35172415, b: 0, a: 1}
   - noteColor: 2
-    color: {r: 0, g: 1, b: 0.21379328, a: 1}
+    color: {r: 0.737931, g: 1, b: 0, a: 1}
   - noteColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - noteColor: 3
-    color: {r: 0.034482956, g: 0, b: 1, a: 1}
+    color: {r: 0, g: 0.91724133, b: 1, a: 1}
   noteColorMaterial: {fileID: 2100000, guid: 8ab5978d6a7154fac83a3762e035d221, type: 2}
 --- !u!114 &114120606174382626
 MonoBehaviour:

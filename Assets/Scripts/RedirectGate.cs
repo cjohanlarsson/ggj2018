@@ -14,6 +14,8 @@ public class RedirectGate : GridObject {
 
 	public override void OnNoteEnter ( Note note ) {
 		note.direction = redirectDirection;
+
+		Pulse();
 	}
 
 	public override void Rotate ( bool clockwise = true ) {

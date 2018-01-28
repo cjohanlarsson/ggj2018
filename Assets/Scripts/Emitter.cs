@@ -28,8 +28,12 @@ public class Emitter : GridObject {
 	}
 
     public override void OnNoteEnter( Note note ) {
-		  grid.DestroyNote( note );
-    }
+		grid.DestroyNote( note );
+		var particles = Grid.MakeNoteCollideParticles( note );
+		particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.15f );
+		particles.transform.rotation = Grid.GetDirectionRotation( Grid.GetOppositeDirection( note.direction ) );
+		//Waver( note.duration * (float)grid.frequency - 0.04f );
+	}
 
 	public override void Rotate ( bool clockwise = true ) {
 		emitDirection = Grid.RotateDirection( emitDirection, clockwise );

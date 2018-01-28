@@ -20,9 +20,10 @@ public class SplitGate : GridObject {
         note.direction = direction1;
         clone.direction = direction2;
         clone.Init( grid, false );
-    }
+		Pulse();
+	}
 
-    public override void Rotate ( bool clockwise = true ) {
+	public override void Rotate ( bool clockwise = true ) {
         direction1 = Grid.RotateDirection( direction1, clockwise );
         direction2 = Grid.RotateDirection( direction2, clockwise );
         UpdateRotationGraphics();
@@ -33,8 +34,6 @@ public class SplitGate : GridObject {
     }
 
     private void UpdateRotationGraphics() {
-		Debug.Log( direction1 );
-		Debug.Log( direction2 );
         Vector3 d1 = Grid.GetDirectionVector(direction1).ToVector3();
         Vector3 d2 = Grid.GetDirectionVector(direction2).ToVector3();
         direction1Img.transform.localPosition = d1 * 0.2800119f;

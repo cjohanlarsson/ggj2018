@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb2e59b966c24954b6a453ada7d6415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  graphics: {fileID: 1681797095835544}
   color: 0
   renderersToSwapForColor:
   - {fileID: 23443410305040832}

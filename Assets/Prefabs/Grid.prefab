@@ -132,6 +132,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99154ee5257894c7f9dbc4e6c66323be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pulseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.0625
+      value: 0.63125
+      inSlope: -1.6406251
+      outSlope: -1.6406251
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9874878
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  waverCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.18205132
+      value: 0.45913464
+      inSlope: 0.50381637
+      outSlope: 0.50381637
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.80974907
+      value: 0.48714906
+      inSlope: -0.49782223
+      outSlope: -0.49782223
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9916687
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   beatTimer: 0
   currentBeat: 0
   bpm: 240

@@ -68,7 +68,12 @@ public class Note : MonoBehaviour {
         this.grid = grid;
 		if( updateGridPos ) _gridPos = new Vector2Int( (int)transform.position.x, (int)transform.position.y );
 
-        UpdateAnimations();
+		lineHistory.Clear();
+		positionHistory.Clear();
+
+		line.positionCount = 0;
+
+        if( alive ) UpdateAnimations();
     }
 
     public bool Move () {
@@ -131,7 +136,14 @@ public class Note : MonoBehaviour {
             startTo   = endFrom;
         }
 
-        lineHistory.Add( endFrom );
+		var remainder = 1 + historyDuration;
+
+		if( remainder < 1 && remainder > 0 ) {
+
+		}
+
+
+		lineHistory.Add( endFrom );
         lineHistory.Add( endTo );
 
         line.positionCount = lineHistory.Count;
@@ -140,15 +152,23 @@ public class Note : MonoBehaviour {
             time += Time.deltaTime;
             var t = time / moveSpeed;
 
-            lineHistory[ 0 ] = Vector3.Lerp( startFrom, startTo, t );
-            lineHistory[ lineHistory.Count - 1 ] = Vector3.Lerp( endFrom, endTo, t );
+			var pos = Vector3.Lerp( endFrom, endTo, t );
 
-            if( t > 0.9f ) {
+			lineHistory[ 0 ] = Vector3.Lerp( startFrom, startTo, t );
+			pos = Vector3.Lerp( endFrom, endTo, t );
+			lineHistory[ lineHistory.Count - 1 ] = pos;
+
+
+			if( t > 0.9f ) {
                 if( switchColorNextBeat ) {
                     switchColorNextBeat = false;
                     this.line.startColor = Visuals.Singleton.ConvertNoteColorToColor(this._color);
                 }
             }
+
+			foreach( var p in lineHistory ) {
+				DebugExtension.DebugPoint( p, Color.red );
+			}
 
             line.SetPositions( lineHistory.ToArray() );
 

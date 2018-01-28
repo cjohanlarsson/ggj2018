@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6d43bb149bb4c43abf88e4868fb94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graphics: {fileID: 0}
+  graphics: {fileID: 1758397545242336}
   color: 0
   renderersToSwapForColor:
   - {fileID: 23830224903945968}

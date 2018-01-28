@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ColorChangeGate : GridObject {
+	public SpriteRenderer gfx;
+
 	public NoteColor[] colorsToChangeTo;
 
-	public Renderer[] renderersToSwapForColorChange;
+	NoteColor currentColor;
+
+	float lockTimer = 0;
 
 	public override void OnNoteEnter ( Note note ) {
-		note.color = colorsToChangeTo[this.grid.BeatsTicked % colorsToChangeTo.Length];
+		note.color = currentColor;
 
         var particles = Grid.MakeNoteCollideParticles( note );
-        particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.15f );
+        particles.transform.position = transform.position + Grid.GetParticleOffset( note.direction, 0.20f );
         particles.transform.rotation = Grid.GetDirectionRotation( Grid.GetOppositeDirection( note.direction ) );
+
+		lockTimer = note.duration;
+		Waver( note.duration * (float)grid.frequency );
 	}
 
-	void Update() {
-		if(renderersToSwapForColorChange != null) {
-			foreach(var r in renderersToSwapForColorChange) {
-				var nc = colorsToChangeTo[this.grid.BeatsTicked % colorsToChangeTo.Length];
-				r.sharedMaterial = Visuals.Singleton.ConvertNoteColorToMaterial( nc );
-			}
+	public override void Tick () {
+		var nc = colorsToChangeTo[ this.grid.BeatsTicked % colorsToChangeTo.Length ];
+		if( lockTimer > 0 ) {
+			lockTimer--;
+			return;
+		}
+
+		if( nc != currentColor ) {
+			Pulse();
+			currentColor = nc;
+			gfx.color = Visuals.Singleton.ConvertNoteColorToColor( currentColor );
 		}
 	}
 }
